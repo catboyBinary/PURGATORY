@@ -1,0 +1,12 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://c6ulm2yl5h345"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f8p2q"]
+ground_bottom_color = Color(0.2, 0.2, 0.2, 1)
+
+[sub_resource type="Sky" id="Sky_lrmee"]
+sky_material = SubResource("ProceduralSkyMaterial_f8p2q")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_lrmee")
+sky_rotation = Vector3(0, 2.55516, 0)
