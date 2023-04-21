@@ -38,45 +38,13 @@ func _unhandled_input(event) -> void:
 		spring_arm.spring_length = int(third_person)*5
 	# The mouse cursor is not visible in the game, you can toggle the behavior with the escape key.
 	if event.is_action_pressed(&"ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED else Input.MOUSE_MODE_VISIBLE)
+		Input.set_mouse_mode(
+			Input.MOUSE_MODE_CAPTURED if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED 
+			else Input.MOUSE_MODE_VISIBLE
+		)
 
 	# Moves the camera according to the movement of the cursor.
 	elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		spring_arm.rotate_x(-event.relative.y * mouse_sensitivity)
 		spring_arm.rotation.x = clamp(spring_arm.rotation.x, deg_to_rad(camera_min_vertical_angle), deg_to_rad(camera_max_vertical_angle))
-
-
-func _physics_process(delta: float) -> void:
-	var input_dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	running = int(Input.is_action_pressed(&"run"))*(sprint_multiplier-1)+1
-
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-
-	# Allow jumping only when on the floor.
-	if Input.is_action_just_pressed(&"jump") and is_on_floor():
-		velocity.y = jump_velocity
-		velocity += direction*SPEED
-
-	# Get the input direction and handle the movement/deceleration.
-	if direction:
-		if is_on_floor():
-			velocity.x = lerpf(velocity.x, direction.x*SPEED*running, SPEED*delta*4)
-			velocity.z = lerpf(velocity.z, direction.z*SPEED*running, SPEED*delta*4)
-		else:
-			velocity.x = lerpf(velocity.x, direction.x*SPEED*running, SPEED*delta)
-			velocity.z = lerpf(velocity.z, direction.z*SPEED*running, SPEED*delta)
-	else:
-		if is_on_floor():
-			velocity.x = lerpf(velocity.x, 0, SPEED*delta*4)
-			velocity.z = lerpf(velocity.z, 0, SPEED*delta*4)
-		else:
-			velocity.x = lerpf(velocity.x, 0, SPEED*delta/4)
-			velocity.z = lerpf(velocity.z, 0, SPEED*delta/4)
-
-	move_and_slide()

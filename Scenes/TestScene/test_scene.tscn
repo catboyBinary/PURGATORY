@@ -1,16 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://suxskuamtd82"]
+[gd_scene load_steps=13 format=3 uid="uid://dtwcsqbbc30gs"]
 
-[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://tile.png" id="1_3yws6"]
-[ext_resource type="PackedScene" uid="uid://0a1ac0hyntgh" path="res://player.tscn" id="1_g8xid"]
-[ext_resource type="Script" path="res://Label.gd" id="2_nroln"]
-[ext_resource type="Texture2D" uid="uid://c3368odsagtim" path="res://cube.jpg" id="3_gjodi"]
+[ext_resource type="PackedScene" uid="uid://d11dgy7j3siw2" path="res://Entities/Player/player.tscn" id="1_3j7bl"]
+[ext_resource type="Script" path="res://Label.gd" id="2_4sveh"]
+[ext_resource type="Texture2D" uid="uid://c3368odsagtim" path="res://Scenes/TestScene/cube.jpg" id="3_g7n14"]
+[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://Scenes/TestScene/tile.png" id="4_0aatj"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vana5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_enj52"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_3i4f5"]
-albedo_texture = ExtResource("3_gjodi")
+albedo_texture = ExtResource("3_g7n14")
 uv1_offset = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
 grow_amount = -1.0
@@ -22,7 +22,7 @@ material = SubResource("ORMMaterial3D_3i4f5")
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_shre6"]
-albedo_texture = ExtResource("1_3yws6")
+albedo_texture = ExtResource("4_0aatj")
 uv1_scale = Vector3(10, 10, 10)
 uv1_triplanar = true
 
@@ -34,7 +34,7 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [node name="TestScene" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_g8xid")]
+[node name="Player" parent="." instance=ExtResource("1_3j7bl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83682, 1.871, 1.42579)
 sprint_multiplier = 1.5
 
@@ -48,7 +48,7 @@ shadow_enabled = true
 offset_right = 40.0
 offset_bottom = 23.0
 text = "fps: "
-script = ExtResource("2_nroln")
+script = ExtResource("2_4sveh")
 
 [node name="StaticBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(0.843234, -0.383608, 0.376566, 0.437943, 0.89647, -0.0674403, -0.311709, 0.221783, 0.923932, 0, 5.73853, -3.86405)
