@@ -14,8 +14,9 @@ extends CharacterBody3D
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 # Nodes for camera management, replace these nodes by yours and remove the initialization in _ready.
-var spring_arm := SpringArm3D.new()
-var camera := Camera3D.new()
+@export var rotatable : Node3D
+@export var spring_arm : SpringArm3D
+@export var camera : Camera3D
 var third_person = false
 var crouching
 var running
@@ -26,10 +27,8 @@ func _ready() -> void:
 	# Nodes for the camera, a SpringArm3D that has a Camera3D as a child (to be deleted when using your nodes).
 	camera.current = true
 	camera.fov = fov
-	spring_arm.position = Vector3(0, 1, 0) # Camera position relative to the player origin.
+	spring_arm.position = Vector3(0, 1.5, 0) # Camera position relative to the player origin.
 	spring_arm.spring_length = 0 # Set to 0 to get an FPS-like camera.
-	spring_arm.add_child(camera)
-	add_child(spring_arm)
 
 
 func _unhandled_input(event) -> void:
@@ -45,6 +44,6 @@ func _unhandled_input(event) -> void:
 
 	# Moves the camera according to the movement of the cursor.
 	elif Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * mouse_sensitivity)
+		rotatable.rotate_y(-event.relative.x * mouse_sensitivity)
 		spring_arm.rotate_x(-event.relative.y * mouse_sensitivity)
 		spring_arm.rotation.x = clamp(spring_arm.rotation.x, deg_to_rad(camera_min_vertical_angle), deg_to_rad(camera_max_vertical_angle))

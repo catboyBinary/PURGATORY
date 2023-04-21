@@ -1,6 +1,7 @@
 extends Node
 
 @onready var player: CharacterBody3D = get_parent().get_parent()
+@export var rotatable : Node3D
 
 @export var SPEED := 5
 @export var sprint_multiplier := 1.3
@@ -19,7 +20,7 @@ const decel_time: float = 1 / 10
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
-	var direction := (player.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var direction := (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	var velocity: Vector3 = player.velocity
 	var plane_velocity := velocity
