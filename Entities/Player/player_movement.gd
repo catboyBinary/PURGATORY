@@ -6,6 +6,7 @@ extends Node
 @export var SPEED := 5
 @export var sprint_multiplier := 1.3
 @export var jump_velocity := 5.0
+@export var coyote := 0.1
 
 const MAX_SPEED: float = 5
 
@@ -15,6 +16,8 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var crouching: bool
 var running: bool
 var on_floor_coyote: bool
+
+var coyote_time : float
 
 const decel_time: float = 1 / 10
 
@@ -28,7 +31,7 @@ func _physics_process(delta: float) -> void:
 	
 	running = Input.is_action_pressed(&"run")
 	
-	on_floor_coyote = coyote_floor()
+	on_floor_coyote = coyote_floor(delta)
 	velocity = vertical_movement(velocity, direction, delta)
 	
 	var decel := -plane_velocity.normalized() / 5
@@ -46,9 +49,11 @@ func _physics_process(delta: float) -> void:
 	player.velocity.y = velocity.y
 	player.move_and_slide()
 
-func coyote_floor() -> bool:
-	return player.is_on_floor()
-	
+func coyote_floor(delta: float) -> bool:
+	if player.is_on_floor(): coyote_time = coyote
+	else: coyote_time -= delta
+	return coyote_time > 0
+
 func vertical_movement(velocity: Vector3, direction: Vector3, delta: float) -> Vector3:
 	if on_floor_coyote:
 		if Input.is_action_just_pressed(&"jump"):
