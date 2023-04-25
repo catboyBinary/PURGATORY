@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://ky7if0yxe633"]
+
+[ext_resource type="Texture2D" uid="uid://4b36g1ijiaeq" path="res://Scenes/TestScene/tile_e2.png" id="1_224he"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3wrv7"]
+load_path = "res://.godot/imported/tile.png-6f6353122b9536779e4cee6ca5f67c42.ctex"
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_a46sp"]
+albedo_texture = SubResource("CompressedTexture2D_3wrv7")
+emission_enabled = true
+emission_on_uv2 = true
+emission_texture = ExtResource("1_224he")
+rim = 0.87
+rim_tint = 0.42
+clearcoat = 0.57
+clearcoat_roughness = 0.69
+anisotropy = 0.25
+ao_light_affect = 0.67
+subsurf_scatter_strength = 0.75
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv2_triplanar = true
+uv2_triplanar_sharpness = 1.51572
+texture_filter = 0
+grow_amount = -1.0
+proximity_fade_distance = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_gn8ob"]
+material = SubResource("ORMMaterial3D_a46sp")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_c4rmy"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Cube2" type="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2.78664, 0.288188, -1.82009)
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_gn8ob")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_c4rmy")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 1, 1)
+omni_range = 7.0

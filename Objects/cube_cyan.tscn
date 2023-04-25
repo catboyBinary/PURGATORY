@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://3ip3mfjalty"]
+
+[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://Scenes/TestScene/tile.png" id="1_nm1kk"]
+[ext_resource type="Texture2D" uid="uid://ep13sdaurdie" path="res://Scenes/TestScene/tile_e.png" id="2_ikufl"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_3i4f5"]
+albedo_texture = ExtResource("1_nm1kk")
+emission_enabled = true
+emission_on_uv2 = true
+emission_texture = ExtResource("2_ikufl")
+rim = 0.87
+rim_tint = 0.42
+clearcoat = 0.57
+clearcoat_roughness = 0.69
+anisotropy = 0.25
+ao_light_affect = 0.67
+subsurf_scatter_strength = 0.75
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv2_triplanar = true
+uv2_triplanar_sharpness = 1.51572
+texture_filter = 0
+grow_amount = -1.0
+proximity_fade_distance = 5.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ipkme"]
+material = SubResource("ORMMaterial3D_3i4f5")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_c4rmy"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="Cube" type="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0.495401, 1.21667, 1.23353)
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ipkme")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_c4rmy")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0, 1, 1, 1)
+omni_range = 7.0
