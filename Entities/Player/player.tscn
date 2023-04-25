@@ -26,7 +26,6 @@ camera = NodePath("Rotatable/SpringArm3D/Camera3D")
 
 [node name="Model" type="MeshInstance3D" parent="Rotatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
 mesh = SubResource("CapsuleMesh_prdut")
 skeleton = NodePath("../..")
 
