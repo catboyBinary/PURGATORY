@@ -44,7 +44,4 @@ rotatable = NodePath("../../Rotatable")
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_hqgr3")
-<<<<<<< HEAD
 script = ExtResource("4_pnfty")
-=======
->>>>>>> parent of a21bd3f... uhm uuuh coyot
