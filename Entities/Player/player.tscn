@@ -5,14 +5,14 @@
 [ext_resource type="Script" path="res://Entities/Player/player_movement.gd" id="2_xigrf"]
 [ext_resource type="Script" path="res://PrismCollisionShape.gd" id="4_pnfty"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_n61ei"]
-size = Vector3(1, 2, 1)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
 albedo_texture = ExtResource("2_wdgqc")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_prdut"]
 material = SubResource("StandardMaterial3D_exwgm")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hqgr3"]
+size = Vector3(0.75, 2, 0.75)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera")]
 script = ExtResource("1_oxu7r")
@@ -22,20 +22,15 @@ rotatable = NodePath("Rotatable")
 spring_arm = NodePath("Rotatable/SpringArm3D")
 camera = NodePath("Rotatable/SpringArm3D/Camera3D")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("BoxShape3D_n61ei")
-
 [node name="Rotatable" type="Node3D" parent="."]
 
 [node name="Model" type="MeshInstance3D" parent="Rotatable"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_prdut")
 skeleton = NodePath("../..")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Rotatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-margin = 0.001
 
 [node name="Camera3D" type="Camera3D" parent="Rotatable/SpringArm3D"]
 
@@ -49,4 +44,7 @@ rotatable = NodePath("../../Rotatable")
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_hqgr3")
+<<<<<<< HEAD
 script = ExtResource("4_pnfty")
+=======
+>>>>>>> parent of a21bd3f... uhm uuuh coyot
