@@ -11,7 +11,7 @@ extends CollisionShape3D
 @export_range(1, 89, 1) var lower_angle = 45
 @export_range(0.1, 20, 0.05) var lower_radius : float
 @export_group("IN EDITOR")
-@export var start: bool
+@export var start = true
 
 func _process(delta: float):
 	if start:
