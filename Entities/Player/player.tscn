@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://d11dgy7j3siw2"]
+[gd_scene load_steps=8 format=3 uid="uid://d11dgy7j3siw2"]
 
 [ext_resource type="Script" path="res://Entities/Player/player2.gd" id="1_oxu7r"]
 [ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://Entities/Player/tyMFjhmVrrI.png" id="2_wdgqc"]
 [ext_resource type="Script" path="res://Entities/Player/player_movement.gd" id="2_xigrf"]
+[ext_resource type="Script" path="res://PrismCollisionShape.gd" id="4_pnfty"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
 albedo_texture = ExtResource("2_wdgqc")
@@ -43,3 +44,4 @@ rotatable = NodePath("../../Rotatable")
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_hqgr3")
+script = ExtResource("4_pnfty")
