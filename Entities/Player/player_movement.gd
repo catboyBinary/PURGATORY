@@ -7,6 +7,9 @@ extends Node
 @export var sprint_multiplier := 1.3
 @export var jump_velocity := 5.0
 @export var coyote := 0.1
+@export var dash_speed := 7
+
+@export var movement_active = true
 
 const MAX_SPEED: float = 5
 
@@ -26,27 +29,32 @@ func _physics_process(delta: float) -> void:
 	
 	var velocity: Vector3 = player.velocity
 	var plane_velocity := velocity
-	plane_velocity.y = 0
-	
-	running = Input.is_action_pressed(&"run")
-	
-	on_floor_coyote = coyote_floor(delta)
-	velocity = vertical_movement(velocity, direction, delta)
-	
-	var decel := -plane_velocity.normalized() / 5
-	
-	if (plane_velocity.length_squared() < decel.length_squared()):
-		plane_velocity = Vector3.ZERO
-	else:
-		plane_velocity += decel
+	if movement_active:
+		plane_velocity.y = 0
+		running = Input.is_action_pressed(&"run")
+		on_floor_coyote = coyote_floor(delta)
+		velocity = vertical_movement(velocity, direction, delta)
 		
-	var accel := direction.normalized()
-	
-	plane_velocity = (plane_velocity + accel).limit_length(MAX_SPEED)
-	
-	player.velocity = plane_velocity
-	player.velocity.y = velocity.y
+		var decel := -plane_velocity.normalized() / 5
+		
+		if (plane_velocity.length_squared() < decel.length_squared()):
+			plane_velocity = Vector3.ZERO
+		else:
+			plane_velocity += decel
+			
+		var accel := direction.normalized()
+		
+		plane_velocity = (plane_velocity + accel).limit_length(MAX_SPEED)
+		
+		player.velocity = plane_velocity
+		player.velocity.y = velocity.y
+		
+		if Input.is_action_just_pressed("dash"): dash(delta, direction)
 	player.move_and_slide()
+
+func dash(delta: float, direction: Vector3):
+	movement_active = false
+	player.velocity = direction * dash_speed
 
 func coyote_floor(delta: float) -> bool:
 	if player.is_on_floor(): coyote_time = coyote

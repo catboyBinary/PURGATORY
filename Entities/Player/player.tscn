@@ -41,6 +41,7 @@ script = ExtResource("2_xigrf")
 rotatable = NodePath("../../Rotatable")
 SPEED = 6
 jump_velocity = 6.0
+dash_speed = 15
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"

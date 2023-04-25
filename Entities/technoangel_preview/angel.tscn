@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://chejcyn0ndyp2"]
+
+[ext_resource type="Script" path="res://Entities/technoangel_preview/angel.gd" id="1_awkk7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_oohpr"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_38uv1"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="Animation" id="Animation_whi1c"]
+resource_name = "new_animation"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1.42929, 3.28332, -3.78862, 1, 1, -1.16636, 1.58373, -7.62124, 2, 1, -1.16636, 1.58373, -7.62124, 3, 1, 4.41308, 2.33298, -6.44747, 4, 1, 4.41308, 2.33298, -6.44747, 5, 1, 1.42929, 3.28332, -3.78862, 6, 1, 1.42929, 3.28332, -3.78862)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t56nq"]
+_data = {
+"new_animation": SubResource("Animation_whi1c")
+}
+
+[node name="angel" type="AnimatableBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14829, 0, 0.906194)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.936696, 0.350142, 0, -0.350142, 0.936696, 1.42929, 3.28332, -3.78862)
+mesh = SubResource("BoxMesh_oohpr")
+script = ExtResource("1_awkk7")
+
+[node name="wing1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.42929, 4.28332, -2.78862)
+mesh = SubResource("SphereMesh_38uv1")
+
+[node name="wing2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.429286, 4.28332, -2.78862)
+mesh = SubResource("SphereMesh_38uv1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "new_animation"
+libraries = {
+"": SubResource("AnimationLibrary_t56nq")
+}
