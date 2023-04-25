@@ -118,4 +118,4 @@ mesh = SubResource("PlaneMesh_dmcav")
 shape = SubResource("ConcavePolygonShape3D_tcrl1")
 
 [node name="angel" parent="." instance=ExtResource("5_eh5pq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.71345, 2.39264, -6.82148)

@@ -19,6 +19,13 @@ tracks/0/path = NodePath("MeshInstance3D")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 1.42929, 3.28332, -3.78862, 1, 1, -1.16636, 1.58373, -7.62124, 2, 1, -1.16636, 1.58373, -7.62124, 3, 1, 4.41308, 2.33298, -6.44747, 4, 1, 4.41308, 2.33298, -6.44747, 5, 1, 1.42929, 3.28332, -3.78862, 6, 1, 1.42929, 3.28332, -3.78862)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.171656, 0.252069, -0.0357559, 0.951692, 1, 1, 0.17371, -0.0815608, 0.0238587, 0.981124, 2, 1, 0.17371, -0.0815608, 0.0238587, 0.981124, 3, 1, -0.0299477, -0.636391, 0.264802, 0.723871)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t56nq"]
 _data = {
@@ -29,16 +36,16 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14829, 0, 0.906194)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.936696, 0.350142, 0, -0.350142, 0.936696, 1.42929, 3.28332, -3.78862)
+transform = Transform3D(0.985557, -0.0751525, -0.151753, 0.018481, 0.938511, -0.344753, 0.168331, 0.336969, 0.926346, -1.3007, 1.50964, -7.78587)
 mesh = SubResource("BoxMesh_oohpr")
 script = ExtResource("1_awkk7")
 
 [node name="wing1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.42929, 4.28332, -2.78862)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.171806, 2.75222, -8.21201)
 mesh = SubResource("SphereMesh_38uv1")
 
 [node name="wing2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.429286, 4.28332, -2.78862)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14511, 2.8267, -8.52903)
 mesh = SubResource("SphereMesh_38uv1")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
