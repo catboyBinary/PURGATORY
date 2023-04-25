@@ -36,7 +36,6 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [node name="Player" parent="." instance=ExtResource("1_3j7bl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83682, 1.871, 1.42579)
-sprint_multiplier = 1.5
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.435594, -0.835723, 0.334402, -0.319649, 0.203673, 0.925388, -0.841476, -0.509985, -0.178419, 0, 4.0234, 7.51095)
