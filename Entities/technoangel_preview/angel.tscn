@@ -1,11 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://chejcyn0ndyp2"]
+[gd_scene load_steps=5 format=3 uid="uid://chejcyn0ndyp2"]
 
 [ext_resource type="ArrayMesh" uid="uid://bsmohpgmvkx64" path="res://Entities/technoangel_preview/vlad.obj" id="1_awhhs"]
 [ext_resource type="Script" path="res://Entities/technoangel_preview/angel.gd" id="1_awkk7"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_38uv1"]
-radius = 0.25
-height = 0.5
 
 [sub_resource type="Animation" id="Animation_whi1c"]
 resource_name = "new_animation"
@@ -35,17 +31,17 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14829, 0, 0.906194)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.95667, -0.225458, -0.45526, 0.0554429, 2.81553, -1.03426, 0.504994, 1.01091, 2.77904, -1.67639, 1.4304, -7.93493)
+transform = Transform3D(2.86797, -0.0475634, 0.878916, 0.274034, 2.89499, -0.737529, -0.836457, 0.785355, 2.77192, 1.20997, 3.35318, -3.59319)
 mesh = ExtResource("1_awhhs")
 script = ExtResource("1_awkk7")
 
 [node name="wing1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.547504, 2.67299, -8.36106)
-mesh = SubResource("SphereMesh_38uv1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.76688, 4.71083, -4.51331)
+mesh = ExtResource("1_awhhs")
 
 [node name="wing2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52081, 2.74747, -8.67809)
-mesh = SubResource("SphereMesh_38uv1")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.131095, 4.38019, -3.97631)
+mesh = ExtResource("1_awhhs")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "new_animation"
