@@ -11,8 +11,8 @@ albedo_texture = ExtResource("2_wdgqc")
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_prdut"]
 material = SubResource("StandardMaterial3D_exwgm")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fuqje"]
-points = PackedVector3Array(9.13545, 0, 4.06737, 6.69131, 0, 7.43145, 3.09017, 0, 9.51056, -1.04528, 0, 9.94522, -5, 0, 8.66025, -8.09017, 0, 5.87785, -9.78148, 0, 2.07912, -9.78148, 0, -2.07912, -8.09017, 0, -5.87785, -5, 0, -8.66025, -1.04528, 0, -9.94522, 3.09017, 0, -9.51056, 6.69131, 0, -7.43145, 9.13545, 0, -4.06737, 10, 0, -2.44929e-15)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_bhu0l"]
+points = PackedVector3Array(0.2, 0, 0, 0.5, 0.123474, 0, 0.5, 1.87653, 0, 0.2, 2, 0, 0.1, 0, 0.173205, 0.25, 0.123474, 0.433013, 0.25, 1.87653, 0.433013, 0.1, 2, 0.173205, -0.1, 0, 0.173205, -0.25, 0.123474, 0.433013, -0.25, 1.87653, 0.433013, -0.1, 2, 0.173205, -0.2, 0, 2.44921e-17, -0.5, 0.123474, 6.12303e-17, -0.5, 1.87653, 6.12303e-17, -0.2, 2, 2.44921e-17, -0.1, 0, -0.173205, -0.25, 0.123474, -0.433013, -0.25, 1.87653, -0.433013, -0.1, 2, -0.173205, 0.1, 0, -0.173205, 0.25, 0.123474, -0.433013, 0.25, 1.87653, -0.433013, 0.1, 2, -0.173205)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera")]
 script = ExtResource("1_oxu7r")
@@ -43,7 +43,10 @@ rotatable = NodePath("../../Rotatable")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("ConvexPolygonShape3D_fuqje")
+shape = SubResource("ConvexPolygonShape3D_bhu0l")
 script = ExtResource("4_pnfty")
-sides_count = 15
+height = 2.0
+radius = 0.5
+sides_count = 6
+upper_radius = 0.2
+lower_radius = 0.2

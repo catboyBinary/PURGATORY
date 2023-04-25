@@ -1,9 +1,6 @@
 extends CharacterBody3D
 
 
-@export var SPEED := 5.0
-@export var sprint_multiplier := 1.3
-@export var jump_velocity := 5.0
 @export_group("Camera")
 @export var fov = 90
 @export var mouse_sensitivity := 0.005
