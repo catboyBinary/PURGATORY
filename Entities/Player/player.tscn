@@ -13,8 +13,8 @@ albedo_texture = ExtResource("2_wdgqc")
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_prdut"]
 material = SubResource("StandardMaterial3D_exwgm")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_rvbca"]
-points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1, 0, 0.173205, 0.25, 0.3, 0.433013, 0.25, 1.7, 0.433013, 0.1, 2, 0.173205, -0.1, 0, 0.173205, -0.25, 0.3, 0.433013, -0.25, 1.7, 0.433013, -0.1, 2, 0.173205, -0.2, 0, 2.44929e-17, -0.5, 0.3, 6.12323e-17, -0.5, 1.7, 6.12323e-17, -0.2, 2, 2.44929e-17, -0.1, 0, -0.173205, -0.25, 0.3, -0.433013, -0.25, 1.7, -0.433013, -0.1, 2, -0.173205, 0.1, 0, -0.173205, 0.25, 0.3, -0.433013, 0.25, 1.7, -0.433013, 0.1, 2, -0.173205)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4o64g"]
+points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1, 0, 0.173205, 0.25, 0.3, 0.433013, 0.25, 1.7, 0.433013, 0.1, 2, 0.173205, -0.1, 0, 0.173205, -0.25, 0.3, 0.433013, -0.25, 1.7, 0.433013, -0.1, 2, 0.173205, -0.2, 0, 2.44921e-17, -0.5, 0.3, 6.12303e-17, -0.5, 1.7, 6.12303e-17, -0.2, 2, 2.44921e-17, -0.1, 0, -0.173205, -0.25, 0.3, -0.433013, -0.25, 1.7, -0.433013, -0.1, 2, -0.173205, 0.1, 0, -0.173205, 0.25, 0.3, -0.433013, 0.25, 1.7, -0.433013, 0.1, 2, -0.173205)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera")]
 script = ExtResource("1_pfsij")
@@ -31,7 +31,7 @@ rotatable = NodePath("../../Smoothing/Rotatable")
 dash_speed = 40
 
 [node name="DashTimer" type="Timer" parent="Logic"]
-wait_time = 0.1
+wait_time = 0.07
 one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="Logic"]
@@ -60,7 +60,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 [node name="Collision" type="CollisionShape3D" parent="."]
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, -5.41882e-07, -0.000680678, 5.41874e-07, 1, -1.20134e-08, 0.000680678, 1.16338e-08, 1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_rvbca")
+shape = SubResource("ConvexPolygonShape3D_4o64g")
 script = ExtResource("4_pnfty")
 height = 2.0
 radius = 0.5
