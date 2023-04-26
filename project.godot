@@ -23,6 +23,10 @@ window/vsync/vsync_mode=0
 
 project/assembly_name="PURGATORY"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/smoothing/plugin.cfg")
+
 [input]
 
 move_forward={
@@ -74,10 +78,12 @@ dash={
 [physics]
 
 3d/run_on_separate_thread=true
-common/physics_ticks_per_second=120
+common/physics_jitter_fix=0.0
 3d/default_gravity=15.0
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=1
+anti_aliasing/quality/screen_space_aa=1
 environment/defaults/default_environment="res://default_env.tres"

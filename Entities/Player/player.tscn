@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d11dgy7j3siw2"]
+[gd_scene load_steps=9 format=3 uid="uid://d11dgy7j3siw2"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_pfsij"]
 [ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://Entities/Player/tyMFjhmVrrI.png" id="2_wdgqc"]
 [ext_resource type="Script" path="res://Entities/Player/player_movement.gd" id="2_xigrf"]
 [ext_resource type="Script" path="res://PrismCollisionShape.gd" id="4_pnfty"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="5_7vi2l"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
 albedo_texture = ExtResource("2_wdgqc")
@@ -18,27 +19,31 @@ points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1,
 script = ExtResource("1_pfsij")
 camera_max_vertical_angle = 90
 camera_min_vertical_angle = -90
-rotatable = NodePath("Rotatable")
-spring_arm = NodePath("Rotatable/SpringArm3D")
-camera = NodePath("Rotatable/SpringArm3D/Camera3D")
+rotatable = NodePath("Smoothing/Rotatable")
+spring_arm = NodePath("Smoothing/Rotatable/SpringArm3D")
+camera = NodePath("Smoothing/Rotatable/SpringArm3D/Camera3D")
 
-[node name="Rotatable" type="Node3D" parent="."]
+[node name="Smoothing" type="Node3D" parent="."]
+script = ExtResource("5_7vi2l")
+target = NodePath("..")
 
-[node name="Model" type="MeshInstance3D" parent="Rotatable"]
+[node name="Rotatable" type="Node3D" parent="Smoothing"]
+
+[node name="Model" type="MeshInstance3D" parent="Smoothing/Rotatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_prdut")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="Rotatable"]
+[node name="SpringArm3D" type="SpringArm3D" parent="Smoothing/Rotatable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
-[node name="Camera3D" type="Camera3D" parent="Rotatable/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="Smoothing/Rotatable/SpringArm3D"]
 
 [node name="Logic" type="Node" parent="."]
 
 [node name="Movement" type="Node" parent="Logic" node_paths=PackedStringArray("rotatable")]
 script = ExtResource("2_xigrf")
-rotatable = NodePath("../../Rotatable")
+rotatable = NodePath("../../Smoothing/Rotatable")
 SPEED = 6
 jump_velocity = 6.0
 dash_speed = 15

@@ -53,23 +53,23 @@ _data = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14829, 0, 0.906194)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.75862, -0.867368, -0.798557, 0.756706, 2.86079, -0.493251, 0.904111, 0.252141, 2.84938, 2.02707, 3.09293, -4.3213)
+transform = Transform3D(-0.132675, -0.970354, -2.83563, 1.34795, 2.51581, -0.923976, 2.67684, -1.31496, 0.324732, 4.74052, 2.36436, -6.40923)
 mesh = SubResource("ArrayMesh_ssan6")
 script = ExtResource("1_awkk7")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="MeshInstance3D"]
-transform = Transform3D(-0.333333, -1.16415e-07, -2.38419e-07, -5.40167e-08, 0.333333, 5.7742e-08, 1.49012e-08, 2.98023e-08, -0.333334, -0.023244, -0.0193255, 0.349458)
+transform = Transform3D(-1, -1.6205e-07, -1.50996e-07, -1.6205e-07, 1, 8.9407e-08, 1.50996e-07, 8.9407e-08, -1, -0.023244, -0.0193255, 0.349458)
 light_energy = 3.72
 shadow_enabled = true
 spot_range = 15.796
 spot_angle_attenuation = 0.784584
 
 [node name="wing1" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98159, 4.42553, -4.88083)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.43641, 3.52613, -5.84534)
 mesh = ExtResource("1_awhhs")
 
 [node name="wing2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.11981, 4.00685, -5.47959)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.07141, 3.20164, -7.76612)
 mesh = ExtResource("1_awhhs")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

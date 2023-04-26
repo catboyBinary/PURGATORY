@@ -27,7 +27,6 @@ func _ready() -> void:
 	spring_arm.position = Vector3(0, 1.5, 0) # Camera position relative to the player origin.
 	spring_arm.spring_length = 0 # Set to 0 to get an FPS-like camera.
 
-
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(&"third_person"):
 		third_person = !third_person
