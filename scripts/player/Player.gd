@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@onready var dash_cooldown = find_child("DashCooldownTimer")
+
 @export_group("Camera")
 @export var rotatable : Node3D
 @export var spring_arm : SpringArm3D

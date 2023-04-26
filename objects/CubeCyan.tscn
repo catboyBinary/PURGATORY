@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://3ip3mfjalty"]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://Scenes/TestScene/tile.png" id="1_nm1kk"]
-[ext_resource type="Texture2D" uid="uid://ep13sdaurdie" path="res://Scenes/TestScene/tile_e.png" id="2_ikufl"]
+[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://assets/textures/testscene/tile.png" id="1_nm1kk"]
+[ext_resource type="Texture2D" uid="uid://ep13sdaurdie" path="res://assets/textures/testscene/tileEmissive2.png" id="2_ikufl"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_3i4f5"]
 albedo_texture = ExtResource("1_nm1kk")

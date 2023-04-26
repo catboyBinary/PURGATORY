@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://s5khgrew0wrg"
-path.s3tc="res://.godot/imported/tyMFjhmVrrI.png-78b76a77503ec9b3b60daf79d752cbe3.s3tc.ctex"
+uid="uid://v1x43mrdxl1n"
+path.s3tc="res://.godot/imported/vlad.png-bab05a3816a6393d5f627ac4927a9989.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Entities/Player/tyMFjhmVrrI.png"
-dest_files=["res://.godot/imported/tyMFjhmVrrI.png-78b76a77503ec9b3b60daf79d752cbe3.s3tc.ctex"]
+source_file="res://assets/textures/vlad.png"
+dest_files=["res://.godot/imported/vlad.png-bab05a3816a6393d5f627ac4927a9989.s3tc.ctex"]
 
 [params]
 

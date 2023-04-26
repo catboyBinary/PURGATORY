@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ep13sdaurdie"
-path.s3tc="res://.godot/imported/tile_e.png-5ff2c5fa74343f5d35fdee7b03e494ab.s3tc.ctex"
+path.s3tc="res://.godot/imported/tileEmissive2.png-a32ae042aa516c9a9095cf054c9ec80a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Scenes/TestScene/tile_e.png"
-dest_files=["res://.godot/imported/tile_e.png-5ff2c5fa74343f5d35fdee7b03e494ab.s3tc.ctex"]
+source_file="res://assets/textures/testscene/tileEmissive2.png"
+dest_files=["res://.godot/imported/tileEmissive2.png-a32ae042aa516c9a9095cf054c9ec80a.s3tc.ctex"]
 
 [params]
 

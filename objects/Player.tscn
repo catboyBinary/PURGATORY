@@ -1,14 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://sw57mr820qjb"]
+[gd_scene load_steps=10 format=3 uid="uid://b1pth7b2pu6ki"]
 
-[ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_pfsij"]
-[ext_resource type="Script" path="res://Entities/Player/player_logic.gd" id="2_fll5o"]
-[ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://Entities/Player/tyMFjhmVrrI.png" id="2_wdgqc"]
-[ext_resource type="Script" path="res://Entities/Player/player_movement.gd" id="2_xigrf"]
-[ext_resource type="Script" path="res://PrismCollisionShape.gd" id="4_pnfty"]
-[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="5_7vi2l"]
+[ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_ixkpr"]
+[ext_resource type="Script" path="res://scripts/player/PlayerLogic.gd" id="2_qjcmw"]
+[ext_resource type="Script" path="res://scripts/player/Movement.gd" id="3_2hrqv"]
+[ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="4_sowjb"]
+[ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://assets/textures/player/player.png" id="5_b0ot0"]
+[ext_resource type="Script" path="res://scripts/PrismCollisionShape.gd" id="6_fiods"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
-albedo_texture = ExtResource("2_wdgqc")
+albedo_texture = ExtResource("5_b0ot0")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_prdut"]
 material = SubResource("StandardMaterial3D_exwgm")
@@ -16,33 +16,33 @@ material = SubResource("StandardMaterial3D_exwgm")
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4o64g"]
 points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1, 0, 0.173205, 0.25, 0.3, 0.433013, 0.25, 1.7, 0.433013, 0.1, 2, 0.173205, -0.1, 0, 0.173205, -0.25, 0.3, 0.433013, -0.25, 1.7, 0.433013, -0.1, 2, 0.173205, -0.2, 0, 2.44921e-17, -0.5, 0.3, 6.12303e-17, -0.5, 1.7, 6.12303e-17, -0.2, 2, 2.44921e-17, -0.1, 0, -0.173205, -0.25, 0.3, -0.433013, -0.25, 1.7, -0.433013, -0.1, 2, -0.173205, 0.1, 0, -0.173205, 0.25, 0.3, -0.433013, 0.25, 1.7, -0.433013, 0.1, 2, -0.173205)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera")]
-script = ExtResource("1_pfsij")
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera") groups=["Player"]]
+script = ExtResource("1_ixkpr")
 rotatable = NodePath("Smoothing/Rotatable")
 spring_arm = NodePath("Smoothing/Rotatable/SpringArm3D")
 camera = NodePath("Smoothing/Rotatable/SpringArm3D/Camera3D")
 
 [node name="Logic" type="Node" parent="."]
-script = ExtResource("2_fll5o")
+script = ExtResource("2_qjcmw")
 
 [node name="Movement" type="Node" parent="Logic" node_paths=PackedStringArray("rotatable")]
-script = ExtResource("2_xigrf")
+script = ExtResource("3_2hrqv")
 rotatable = NodePath("../../Smoothing/Rotatable")
 dash_speed = 40
 
-[node name="DashTimer" type="Timer" parent="Logic"]
+[node name="DashTimer" type="Timer" parent="Logic" groups=["PlayerTimers"]]
 wait_time = 0.07
 one_shot = true
 
-[node name="DashCooldownTimer" type="Timer" parent="Logic"]
+[node name="DashCooldownTimer" type="Timer" parent="Logic" groups=["PlayerTimers"]]
 one_shot = true
 
-[node name="CoyoteTimer" type="Timer" parent="Logic"]
+[node name="CoyoteTimer" type="Timer" parent="Logic" groups=["PlayerTimers"]]
 wait_time = 0.5
 one_shot = true
 
 [node name="Smoothing" type="Node3D" parent="."]
-script = ExtResource("5_7vi2l")
+script = ExtResource("4_sowjb")
 target = NodePath("..")
 
 [node name="Rotatable" type="Node3D" parent="Smoothing"]
@@ -61,7 +61,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, -5.41882e-07, -0.000680678, 5.41874e-07, 1, -1.20134e-08, 0.000680678, 1.16338e-08, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_4o64g")
-script = ExtResource("4_pnfty")
+script = ExtResource("6_fiods")
 height = 2.0
 radius = 0.5
 sides_count = 6

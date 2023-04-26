@@ -1,12 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://dtwcsqbbc30gs"]
+[gd_scene load_steps=17 format=3 uid="uid://btjlqsahg1e5s"]
 
-[ext_resource type="PackedScene" uid="uid://sw57mr820qjb" path="res://Entities/Player/player.tscn" id="1_3j7bl"]
-[ext_resource type="Script" path="res://Label.gd" id="2_4sveh"]
-[ext_resource type="Script" path="res://Scenes/TestScene/ProgressBar.gd" id="3_f1n2q"]
-[ext_resource type="PackedScene" uid="uid://3ip3mfjalty" path="res://Objects/cube_cyan.tscn" id="3_tffrn"]
-[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://Scenes/TestScene/tile.png" id="4_0aatj"]
-[ext_resource type="PackedScene" uid="uid://ky7if0yxe633" path="res://Objects/cube_fuchsia.tscn" id="4_oa5o1"]
-[ext_resource type="PackedScene" uid="uid://chejcyn0ndyp2" path="res://Entities/technoangel_preview/angel.tscn" id="5_eh5pq"]
+[ext_resource type="PackedScene" uid="uid://b1pth7b2pu6ki" path="res://objects/Player.tscn" id="1_rxttl"]
+[ext_resource type="Script" path="res://Label.gd" id="2_v14e6"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="3_0dafa"]
+[ext_resource type="Script" path="res://scripts/ProgressBar.gd" id="3_7gceg"]
+[ext_resource type="PackedScene" path="res://objects/CubeCyan.tscn" id="4_6krqk"]
+[ext_resource type="PackedScene" path="res://objects/CubeFuchsia.tscn" id="5_o8c26"]
+[ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://assets/textures/testscene/tile.png" id="6_bbxef"]
+[ext_resource type="PackedScene" uid="uid://ddl7ge1vp1vib" path="res://objects/Angel.tscn" id="7_ug0k4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ljxsp"]
 sky_top_color = Color(0.054902, 0.0666667, 0.152941, 1)
@@ -37,7 +38,7 @@ volumetric_fog_albedo = Color(0.776471, 0.717647, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_enj52"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_shre6"]
-albedo_texture = ExtResource("4_0aatj")
+albedo_texture = ExtResource("6_bbxef")
 uv1_scale = Vector3(10, 10, 10)
 uv1_triplanar = true
 texture_filter = 0
@@ -50,7 +51,7 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [node name="TestScene" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("1_3j7bl")]
+[node name="Player" parent="." instance=ExtResource("1_rxttl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83682, 1.871, 1.42579)
 max_look_up_angle = 80.0
 max_look_down_angle = 60.0
@@ -69,9 +70,9 @@ sky_mode = 2
 offset_right = 40.0
 offset_bottom = 23.0
 text = "fps: "
-script = ExtResource("2_4sveh")
+script = ExtResource("2_v14e6")
 
-[node name="GUI" type="Control" parent="CanvasLayer"]
+[node name="UI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -79,8 +80,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("3_0dafa")
 
-[node name="DashTimer" type="ProgressBar" parent="CanvasLayer/GUI" node_paths=PackedStringArray("player")]
+[node name="DashTimer" type="ProgressBar" parent="CanvasLayer/UI"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -94,53 +96,58 @@ offset_bottom = -7.0
 grow_horizontal = 2
 grow_vertical = 0
 show_percentage = false
-script = ExtResource("3_f1n2q")
-player = NodePath("../../../Player")
+script = ExtResource("3_7gceg")
 
-[node name="StaticBody3D" type="RigidBody3D" parent="."]
+[node name="FallingCube" type="RigidBody3D" parent="."]
 transform = Transform3D(0.843234, -0.383608, 0.376566, 0.437943, 0.89647, -0.0674403, -0.311709, 0.221783, 0.923932, 0, 5.73853, -3.86405)
 mass = 0.07
 can_sleep = false
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="FallingCube"]
 transform = Transform3D(0.999994, 0.000710107, 0.00332251, -0.000717774, 0.999997, 0.00232741, -0.0033209, -0.0023298, 0.999991, 0, 0, 0)
 mesh = SubResource("BoxMesh_vana5")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FallingCube"]
 shape = SubResource("BoxShape3D_enj52")
 
-[node name="Cube" parent="." instance=ExtResource("3_tffrn")]
+[node name="Cubes" type="Node3D" parent="."]
 
-[node name="Cube4" parent="." instance=ExtResource("3_tffrn")]
+[node name="Cube" parent="Cubes" instance=ExtResource("4_6krqk")]
+
+[node name="Cube4" parent="Cubes" instance=ExtResource("4_6krqk")]
 transform = Transform3D(1.73716, -0.453728, 2.40487, 0.206457, 1.90476, 1.56607, -0.969349, -0.407435, 4.6433, 8.96765, 3.89673, 0.908077)
 
-[node name="Cube5" parent="." instance=ExtResource("3_tffrn")]
+[node name="Cube5" parent="Cubes" instance=ExtResource("4_6krqk")]
 transform = Transform3D(1.14582, -1.01802, -3.50663, 0.206457, 1.64471, -3.05425, 1.62618, 0.508492, 2.85856, 13.3192, 6.67958, 2.80482)
 
-[node name="Cube2" parent="." instance=ExtResource("4_oa5o1")]
+[node name="Cube2" parent="Cubes" instance=ExtResource("5_o8c26")]
 
-[node name="Cube3" parent="." instance=ExtResource("4_oa5o1")]
+[node name="Cube3" parent="Cubes" instance=ExtResource("5_o8c26")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.78973, 2.18738, -3.7829)
 
-[node name="Cube6" parent="." instance=ExtResource("4_oa5o1")]
+[node name="Cube6" parent="Cubes" instance=ExtResource("5_o8c26")]
 transform = Transform3D(4.01125, 0, 0, 0, 4.01125, 0, 0, 0, 4.01125, 18.1282, 7.55544, -2.55344)
 
-[node name="OmniLight3D" parent="Cube6" index="2"]
+[node name="mesh" parent="Cubes/Cube6" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="OmniLight3D" parent="Cubes/Cube6" index="2"]
 light_energy = 1.681
 light_size = 1.0
 omni_range = 10.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="Plane" type="StaticBody3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+
+[node name="Plane" type="MeshInstance3D" parent="Plane"]
 mesh = SubResource("PlaneMesh_dmcav")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane"]
 shape = SubResource("ConcavePolygonShape3D_tcrl1")
 
-[node name="angel" parent="." instance=ExtResource("5_eh5pq")]
+[node name="Angel" parent="." instance=ExtResource("7_ug0k4")]
 transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -0.286552, 2.39264, -12.8215)
 
-[editable path="Cube6"]
+[editable path="Cubes/Cube6"]
