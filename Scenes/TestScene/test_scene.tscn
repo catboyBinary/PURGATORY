@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://dtwcsqbbc30gs"]
 
-[ext_resource type="PackedScene" uid="uid://d11dgy7j3siw2" path="res://Entities/Player/player.tscn" id="1_3j7bl"]
+[ext_resource type="PackedScene" path="res://Entities/Player/player.tscn" id="1_3j7bl"]
 [ext_resource type="Script" path="res://Label.gd" id="2_4sveh"]
 [ext_resource type="PackedScene" uid="uid://3ip3mfjalty" path="res://Objects/cube_cyan.tscn" id="3_tffrn"]
 [ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://Scenes/TestScene/tile.png" id="4_0aatj"]
@@ -51,6 +51,8 @@ data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0
 
 [node name="Player" parent="." instance=ExtResource("1_3j7bl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.83682, 1.871, 1.42579)
+max_look_up_angle = 80.0
+max_look_down_angle = 60.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_m8dpp")

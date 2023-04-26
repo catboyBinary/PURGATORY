@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://d11dgy7j3siw2"]
+[gd_scene load_steps=10 format=3 uid="uid://sw57mr820qjb"]
 
 [ext_resource type="Script" path="res://Entities/Player/player.gd" id="1_pfsij"]
+[ext_resource type="Script" path="res://Entities/Player/player_logic.gd" id="2_fll5o"]
 [ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://Entities/Player/tyMFjhmVrrI.png" id="2_wdgqc"]
 [ext_resource type="Script" path="res://Entities/Player/player_movement.gd" id="2_xigrf"]
 [ext_resource type="Script" path="res://PrismCollisionShape.gd" id="4_pnfty"]
@@ -17,11 +18,28 @@ points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1,
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera")]
 script = ExtResource("1_pfsij")
-camera_max_vertical_angle = 90
-camera_min_vertical_angle = -90
 rotatable = NodePath("Smoothing/Rotatable")
 spring_arm = NodePath("Smoothing/Rotatable/SpringArm3D")
 camera = NodePath("Smoothing/Rotatable/SpringArm3D/Camera3D")
+
+[node name="Logic" type="Node" parent="."]
+script = ExtResource("2_fll5o")
+
+[node name="Movement" type="Node" parent="Logic" node_paths=PackedStringArray("rotatable")]
+script = ExtResource("2_xigrf")
+rotatable = NodePath("../../Smoothing/Rotatable")
+dash_speed = 40
+
+[node name="DashTimer" type="Timer" parent="Logic"]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="Logic"]
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="Logic"]
+wait_time = 0.5
+one_shot = true
 
 [node name="Smoothing" type="Node3D" parent="."]
 script = ExtResource("5_7vi2l")
@@ -39,15 +57,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Smoothing/Rotatable/SpringArm3D"]
 
-[node name="Logic" type="Node" parent="."]
-
-[node name="Movement" type="Node" parent="Logic" node_paths=PackedStringArray("rotatable")]
-script = ExtResource("2_xigrf")
-rotatable = NodePath("../../Smoothing/Rotatable")
-SPEED = 6
-jump_velocity = 6.0
-dash_speed = 15
-
 [node name="Collision" type="CollisionShape3D" parent="."]
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
 transform = Transform3D(1, -5.41882e-07, -0.000680678, 5.41874e-07, 1, -1.20134e-08, 0.000680678, 1.16338e-08, 1, 0, 0, 0)
@@ -59,3 +68,7 @@ sides_count = 6
 upper_radius = 0.2
 lower_radius = 0.2
 start = false
+
+[connection signal="timeout" from="Logic/DashTimer" to="Logic" method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Logic/DashCooldownTimer" to="Logic" method="_on_dash_cooldown_timer_timeout"]
+[connection signal="timeout" from="Logic/CoyoteTimer" to="Logic" method="_on_coyote_timer_timeout"]

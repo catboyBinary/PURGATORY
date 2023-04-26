@@ -1,71 +1,83 @@
 extends Node
 
+@onready var player_logic: PlayerLogic = get_parent()
 @onready var player: CharacterBody3D = get_parent().get_parent()
 @export var rotatable : Node3D
 
-@export var SPEED := 5
-@export var sprint_multiplier := 1.3
-@export var jump_velocity := 5.0
+@export var max_speed := 5
+@export var jump_velocity := 7.0
 @export var coyote := 0.1
 @export var dash_speed := 7
 
-@export var movement_active = true
-
-const MAX_SPEED: float = 5
+var raw_decel: float = 0.2
+var raw_accel: float = 1
 
 # Get the global gravity from the project settings. RigidBody3D nodes also use this value.
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-var crouching: bool
-var running: bool
 var on_floor_coyote: bool
 var coyote_time: float
 
-const decel_time: float = 1 / 10
+var dash_direction: Vector3
 
 func _physics_process(delta: float) -> void:
-	var input_dir := Input.get_vector(&"move_left", &"move_right", &"move_forward", &"move_backward")
+	var input_dir := Input.get_vector(
+		&"move_left", &"move_right", 
+		&"move_forward", &"move_backward"
+	)
 	var direction := (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	var velocity: Vector3 = player.velocity
-	var plane_velocity := velocity
-	if movement_active:
-		plane_velocity.y = 0
-		running = Input.is_action_pressed(&"run")
-		on_floor_coyote = coyote_floor(delta)
-		velocity = vertical_movement(velocity, direction, delta)
+	if (player.is_on_floor()):
+		player_logic.coyote = true
+		player_logic.coyote_timer.stop()
+	else:
+		player_logic.coyote_timer.start()
+	
+	match player_logic.state:
+		PlayerLogic.State.DASHING:
+			if (dash_direction == Vector3.ZERO):
+				dash_direction = direction
+			player.velocity = dash(dash_direction)
+		PlayerLogic.State.OTHER:
+			dash_direction = Vector3.ZERO
+			player.velocity = general_movement(player.velocity, direction, delta)
 		
-		var decel := -plane_velocity.normalized() / 5
-		
-		if (plane_velocity.length_squared() < decel.length_squared()):
-			plane_velocity = Vector3.ZERO
-		else:
-			plane_velocity += decel
-			
-		var accel := direction.normalized()
-		
-		plane_velocity = (plane_velocity + accel).limit_length(MAX_SPEED)
-		
-		player.velocity = plane_velocity
-		player.velocity.y = velocity.y
-		
-		if Input.is_action_just_pressed("dash"): dash(delta, direction)
 	player.move_and_slide()
 
-func dash(delta: float, direction: Vector3):
-	movement_active = false
-	player.velocity = direction * dash_speed
-
-func coyote_floor(delta: float) -> bool:
-	if player.is_on_floor(): coyote_time = coyote
-	elif coyote_time > 0: coyote_time -= delta
-	return coyote_time > 0
+func dash(direction: Vector3) -> Vector3:
+	return direction * dash_speed
 	
-func vertical_movement(velocity: Vector3, direction: Vector3, delta: float) -> Vector3:
-	if on_floor_coyote:
-		if Input.is_action_just_pressed(&"jump"):
-			velocity.y = jump_velocity
+func general_movement(
+	velocity: Vector3, 
+	direction: Vector3, 
+	delta: float
+) -> Vector3:
+	var new_vertical_velocity = get_vertical_velocity(velocity, delta)
+	
+	#flatten that
+	velocity.y = 0
+	
+	var decel := -velocity.normalized() * raw_decel
+	var accel := direction.normalized() * raw_accel
+	
+	if (velocity.length_squared() < decel.length_squared()):
+		velocity = Vector3.ZERO
 	else:
+		velocity += decel
+		
+	velocity = (velocity + accel).limit_length(max_speed)
+	velocity.y = new_vertical_velocity
+	
+	return velocity
+	
+func get_vertical_velocity(velocity: Vector3, delta: float) -> float:
+	if (not player.is_on_floor()):
 		velocity.y -= gravity * delta
 		
-	return velocity
+	if (player_logic.coyote):
+		if Input.is_action_just_pressed(&"jump"):
+			velocity.y = jump_velocity
+			player_logic.coyote = false
+			player_logic.coyote_timer.stop()
+
+	return velocity.y
