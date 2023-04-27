@@ -54,7 +54,9 @@ func general_state_machine(state: GeneralState) -> GeneralState:
 			if speed_sq >= 0.01: state = GeneralState.RUNNING
 			elif movement.crouching: state = GeneralState.IDLE_CROUCH
 		GeneralState.IDLE_CROUCH:
-			if movement.direction: state = GeneralState.CROUCHING
+			if speed_sq >= 0.01: state = GeneralState.CROUCHING
+		GeneralState.CROUCHING:
+			if speed_sq < 0.01: state = GeneralState.IDLE_CROUCH
 		GeneralState.RUNNING:
 			if speed_sq < 0.01: state = GeneralState.IDLE
 				
@@ -65,24 +67,12 @@ func general_state_machine(state: GeneralState) -> GeneralState:
 func vertical_state_machine(state: VerticalState) -> VerticalState:
 	last_vertical_state = state
 	
-	if coyote:
-		return VerticalState.IDLE
+  if coyote: state = VerticalState.IDLE
+	if player.velocity.y > 0.25: state = VerticalState.RISING
+	elif -0.25 <= player.velocity.y and player.velocity.y <= 0.25: state = VerticalState.JUMP_APEX	
+	elif player.velocity.y < -0.25: state = VerticalState.FALLING
 	
-	match state:
-		VerticalState.IDLE:
-			if player.velocity.y > 0.25: 
-				state = VerticalState.RISING
-			else: 
-				state = VerticalState.JUMP_APEX
-		VerticalState.RISING:
-			if -0.25 <= player.velocity.y and player.velocity.y <= 0.25: 
-				state = VerticalState.JUMP_APEX
-		VerticalState.JUMP_APEX:
-			if player.velocity.y < -0.25: 
-				state = VerticalState.FALLING
-			
-	if state != last_vertical_state: 
-		state = vertical_state_machine(state)
+	if state != last_vertical_state: state = vertical_state_machine(state)
 	general_state_changed.emit()
 	return state
 

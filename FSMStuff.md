@@ -25,14 +25,15 @@ if the player does, it overrules any other state.
 - WallRunning
 
 ### V-MovementFSM states:
-- OnFloor
+- Idle
 - Falling
 - Rising
 - JumpApex
 
 ### AbilityFSM states:
-- None
-- TODO
+- Idle
+- Dash
+- Sword Dash
 
 ---
 ## GeneralFSM behaviour outline:
@@ -89,7 +90,7 @@ Player's starting state depends on the level, most often it's Falling.
 
 ```
 if (coyote):
-	state = OnFloor
+	state = Idle
 elif (velocity.y < jumpApexEnd):
 	state = Falling
 elif (velocity.y < jumpApexStart):
