@@ -7,7 +7,7 @@ enum AbilityState {
 	SWORD_DASH
 }
 
-enum State {
+enum GeneralState {
 	IDLE,
 	IDLE_CROUCH,
 	CROUCHING,
@@ -23,7 +23,7 @@ enum VerticalState {
 	FALLING
 }
 
-var current_state: State = State.IDLE
+var current_state: GeneralState = GeneralState.IDLE
 var current_ability: AbilityState = AbilityState.IDLE
 
 var can_dash: bool = true
@@ -37,18 +37,19 @@ var coyote: bool = false
 var buffered_jump: bool = false
 var last_state = current_state
 
-func state_machine():
-	last_state = current_state
-	match current_state:
-		State.IDLE:
-			if movement.direction: current_state = State.RUNNING
-			if movement.crouching: current_state = State.IDLE_CROUCH
-		State.IDLE_CROUCH:
-			if movement.direction: current_state = State.CROUCHING
-		State.RUNNING:
-			if movement.direction == Vector3.ZERO: current_state = State.IDLE
+func state_machine(state: GeneralState) -> GeneralState:
+	last_state = state
+	match state:
+		GeneralState.IDLE:
+			if movement.direction: state = GeneralState.RUNNING
+			elif movement.crouching: state = GeneralState.IDLE_CROUCH
+		GeneralState.IDLE_CROUCH:
+			if movement.direction: state = GeneralState.CROUCHING
+		GeneralState.RUNNING:
+			if movement.direction == Vector3.ZERO: state = GeneralState.IDLE
 				
-	if current_state != last_state: state_machine()
+	if state != last_state: state = state_machine(state)
+	return state
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and can_dash):

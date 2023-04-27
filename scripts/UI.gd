@@ -7,4 +7,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$CurrentState.text = "current_state: " + str(player.logic.State.keys()[player.logic.current_state])
+	$CurrentState.text = "current_state: " + str(player.logic.GeneralState.keys()[player.logic.current_state])
