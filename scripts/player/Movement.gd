@@ -48,9 +48,10 @@ func _physics_process(delta: float) -> void:
 	
 	match player_logic.ability_state:
 		PlayerLogic.AbilityState.DASHING:
-			dashed.emit()
 			if (dash_direction == Vector3.ZERO):
-				dash_direction = rotatable.transform.basis*Vector3(0,0,-1)
+				if direction == Vector3.ZERO: direction = rotatable.transform.basis*Vector3(0,0,-1)
+				dashed.emit()
+				dash_direction = direction
 			player.velocity = dash(dash_direction)
 		PlayerLogic.AbilityState.IDLE:
 			dash_direction = Vector3.ZERO
