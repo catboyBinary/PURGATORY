@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/player/SoundLogic.gd" id="4_l5qwg"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="4_sowjb"]
 [ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://assets/textures/player/player.png" id="5_b0ot0"]
-[ext_resource type="Script" path="res://scripts/PrismCollisionShape.gd" id="6_fiods"]
+[ext_resource type="Script" path="res://scripts/PrismlikeCollisionShape.gd" id="9_0to01"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
 albedo_texture = ExtResource("5_b0ot0")
@@ -16,8 +16,17 @@ albedo_texture = ExtResource("5_b0ot0")
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_prdut"]
 material = SubResource("StandardMaterial3D_exwgm")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4o64g"]
-points = PackedVector3Array(0.2, 0, 0, 0.5, 0.3, 0, 0.5, 1.7, 0, 0.2, 2, 0, 0.1, 0, 0.173205, 0.25, 0.3, 0.433013, 0.25, 1.7, 0.433013, 0.1, 2, 0.173205, -0.1, 0, 0.173205, -0.25, 0.3, 0.433013, -0.25, 1.7, 0.433013, -0.1, 2, 0.173205, -0.2, 0, 2.44921e-17, -0.5, 0.3, 6.12303e-17, -0.5, 1.7, 6.12303e-17, -0.2, 2, 2.44921e-17, -0.1, 0, -0.173205, -0.25, 0.3, -0.433013, -0.25, 1.7, -0.433013, -0.1, 2, -0.173205, 0.1, 0, -0.173205, 0.25, 0.3, -0.433013, 0.25, 1.7, -0.433013, 0.1, 2, -0.173205)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_k8582"]
+points = PackedVector3Array(0.3, -1, 0, 0.15, -1, 0.259808, -0.15, -1, 0.259808, -0.3, -1, 3.67382e-17, -0.15, -1, -0.259808, 0.15, -1, -0.259808, 0.5, -0.8, 0, 0.25, -0.8, 0.433013, -0.25, -0.8, 0.433013, -0.5, -0.8, 6.12303e-17, -0.25, -0.8, -0.433013, 0.25, -0.8, -0.433013, 0.5, 0.8, 0, 0.25, 0.8, 0.433013, -0.25, 0.8, 0.433013, -0.5, 0.8, 6.12303e-17, -0.25, 0.8, -0.433013, 0.25, 0.8, -0.433013, 0.3, 1, 0, 0.15, 1, 0.259808, -0.15, 1, 0.259808, -0.3, 1, 3.67382e-17, -0.15, 1, -0.259808, 0.15, 1, -0.259808)
+script = ExtResource("9_0to01")
+height = 2.0
+radius = 0.5
+sides_count = 6
+upper_height = 0.2
+upper_radius = 0.3
+lower_height = 0.2
+lower_radius = 0.3
+twist = false
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("rotatable", "spring_arm", "camera") groups=["Player"]]
 script = ExtResource("1_ixkpr")
@@ -71,15 +80,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 editor_description = "!!! box collider doesn't work properly with uneven terrain like stairs, need to add some sort of step height !!!"
-transform = Transform3D(1, -5.41882e-07, -0.000680678, 5.41874e-07, 1, -1.20134e-08, 0.000680678, 1.16338e-08, 1, 0, 0, 0)
-shape = SubResource("ConvexPolygonShape3D_4o64g")
-script = ExtResource("6_fiods")
-height = 2.0
-radius = 0.5
-sides_count = 6
-upper_radius = 0.2
-lower_radius = 0.2
-start = false
+transform = Transform3D(1, -5.41882e-07, -0.000680678, 5.41874e-07, 1, -1.20134e-08, 0.000680678, 1.16338e-08, 1, 0, 1, 0)
+shape = SubResource("ConvexPolygonShape3D_k8582")
 
 [connection signal="dashed" from="Logic/Movement" to="Sound" method="_on_dash"]
 [connection signal="land" from="Logic/Movement" to="Sound" method="_on_land"]

@@ -31,6 +31,7 @@ func _physics_process(delta: float) -> void:
 		&"move_forward", &"move_backward"
 	)
 	var direction := (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	player_logic.update_coyote(player.is_on_floor(), false)
 	
 	if (player.is_on_floor()):
 		if landing:
@@ -86,9 +87,9 @@ func get_vertical_velocity(velocity: Vector3, delta: float) -> float:
 		velocity.y -= gravity * delta
 		
 	if (player_logic.coyote):
-		if Input.is_action_just_pressed(&"jump"):
+		if Input.is_action_just_pressed(&"jump") || player_logic.buffered_jump:
+			player_logic.buffered_jump = false
 			velocity.y = jump_velocity
-			player_logic.coyote = false
-			player_logic.coyote_timer.stop()
+			player_logic.update_coyote(false, true)
 
 	return velocity.y
