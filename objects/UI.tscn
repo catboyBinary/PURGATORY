@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp4clk53ss4n7"]
+
+[ext_resource type="Script" path="res://scripts/UI.gd" id="1_dbbul"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_dbbul")
+
+[node name="DashTimer" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -26.5
+offset_top = -16.0
+offset_right = 26.5
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 0
+show_percentage = false
+
+[node name="FPS" type="Label" parent="."]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 26.0
+text = "fps: "
+
+[node name="GeneralState" type="Label" parent="."]
+layout_mode = 0
+offset_top = 22.0
+offset_right = 104.0
+offset_bottom = 48.0
+text = "general_state:
+"
+
+[node name="AbilityState" type="Label" parent="."]
+layout_mode = 0
+offset_top = 46.0
+offset_right = 108.0
+offset_bottom = 72.0
+text = "ability_state:
+"
+
+[node name="VerticalState" type="Label" parent="."]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 108.0
+offset_bottom = 96.0
+text = "vertical_state:
+"

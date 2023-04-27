@@ -26,7 +26,7 @@ func _ready() -> void:
 	camera_setup()
 
 func _physics_process(delta):
-	logic.state_machine()
+	logic.general_state = logic.general_state_machine(logic.general_state)
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(&"third_person"):
