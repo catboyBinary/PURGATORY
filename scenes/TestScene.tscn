@@ -1,9 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://bbjo2c4ecg7x2"]
+[gd_scene load_steps=15 format=3 uid="uid://bbjo2c4ecg7x2"]
 
 [ext_resource type="PackedScene" uid="uid://diwo3ru0y8t16" path="res://objects/Player.tscn" id="1_rxttl"]
-[ext_resource type="Script" path="res://scripts/Label.gd" id="2_hvgb5"]
-[ext_resource type="Script" path="res://scripts/UI.gd" id="3_0dafa"]
-[ext_resource type="Script" path="res://scripts/ProgressBar.gd" id="3_7gceg"]
+[ext_resource type="PackedScene" uid="uid://cp4clk53ss4n7" path="res://objects/UI.tscn" id="2_cn7xk"]
 [ext_resource type="PackedScene" path="res://objects/CubeCyan.tscn" id="4_6krqk"]
 [ext_resource type="PackedScene" path="res://objects/CubeFuchsia.tscn" id="5_o8c26"]
 [ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://assets/textures/testscene/tile.png" id="6_bbxef"]
@@ -66,46 +64,7 @@ sky_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("3_0dafa")
-
-[node name="DashTimer" type="ProgressBar" parent="CanvasLayer/UI"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -26.5
-offset_top = -16.0
-offset_right = 26.5
-offset_bottom = -7.0
-grow_horizontal = 2
-grow_vertical = 0
-show_percentage = false
-script = ExtResource("3_7gceg")
-
-[node name="FPS" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 1
-offset_right = 40.0
-offset_bottom = 26.0
-text = "fps: "
-script = ExtResource("2_hvgb5")
-
-[node name="CurrentState" type="Label" parent="CanvasLayer/UI"]
-layout_mode = 0
-offset_top = 22.0
-offset_right = 104.0
-offset_bottom = 48.0
-text = "current_state:
-"
+[node name="UI" parent="CanvasLayer" instance=ExtResource("2_cn7xk")]
 
 [node name="FallingCube" type="RigidBody3D" parent="."]
 transform = Transform3D(0.843234, -0.383608, 0.376566, 0.437943, 0.89647, -0.0674403, -0.311709, 0.221783, 0.923932, 0, 5.73853, -3.86405)
