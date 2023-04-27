@@ -19,6 +19,8 @@ var on_floor_coyote: bool
 var coyote_time: float
 
 var landing : bool
+var crouching = false
+var direction
 
 var dash_direction: Vector3
 
@@ -30,7 +32,7 @@ func _physics_process(delta: float) -> void:
 		&"move_left", &"move_right", 
 		&"move_forward", &"move_backward"
 	)
-	var direction := (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	direction = (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	player_logic.update_coyote(player.is_on_floor(), false)
 	
 	if (player.is_on_floor()):
@@ -44,13 +46,13 @@ func _physics_process(delta: float) -> void:
 			landing = true
 		player_logic.coyote_timer.start()
 	
-	match player_logic.state:
-		PlayerLogic.State.DASHING:
+	match player_logic.current_ability:
+		PlayerLogic.AbilityState.DASHING:
 			dashed.emit()
 			if (dash_direction == Vector3.ZERO):
 				dash_direction = direction
 			player.velocity = dash(dash_direction)
-		PlayerLogic.State.OTHER:
+		PlayerLogic.AbilityState.IDLE:
 			dash_direction = Vector3.ZERO
 			player.velocity = general_movement(player.velocity, direction, delta)
 		

@@ -99,6 +99,14 @@ offset_bottom = 26.0
 text = "fps: "
 script = ExtResource("2_hvgb5")
 
+[node name="CurrentState" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 0
+offset_top = 22.0
+offset_right = 104.0
+offset_bottom = 48.0
+text = "current_state:
+"
+
 [node name="FallingCube" type="RigidBody3D" parent="."]
 transform = Transform3D(0.843234, -0.383608, 0.376566, 0.437943, 0.89647, -0.0674403, -0.311709, 0.221783, 0.923932, 0, 5.73853, -3.86405)
 mass = 0.07

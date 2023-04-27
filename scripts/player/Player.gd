@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 @onready var dash_cooldown = find_child("DashCooldownTimer")
+@onready var logic = $Logic
 
 @export_group("Camera")
 @export var rotatable : Node3D
@@ -18,12 +19,14 @@ extends CharacterBody3D
 		max_look_down_angle = -deg_to_rad(value)
 
 var third_person = false
-var crouching
 
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	camera_setup()
+
+func _physics_process(delta):
+	logic.state_machine()
 
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(&"third_person"):
