@@ -1,8 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://b1pth7b2pu6ki"]
+[gd_scene load_steps=13 format=3 uid="uid://diwo3ru0y8t16"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_ixkpr"]
 [ext_resource type="Script" path="res://scripts/player/PlayerLogic.gd" id="2_qjcmw"]
 [ext_resource type="Script" path="res://scripts/player/Movement.gd" id="3_2hrqv"]
+[ext_resource type="AudioStream" uid="uid://b2ortl4uqchv1" path="res://assets/sounds/land.wav" id="3_7a03k"]
+[ext_resource type="AudioStream" uid="uid://dhn5u0pi8r2tw" path="res://assets/sounds/dash.wav" id="3_a2jvh"]
+[ext_resource type="Script" path="res://scripts/player/SoundLogic.gd" id="4_l5qwg"]
 [ext_resource type="Script" path="res://addons/smoothing/smoothing.gd" id="4_sowjb"]
 [ext_resource type="Texture2D" uid="uid://s5khgrew0wrg" path="res://assets/textures/player/player.png" id="5_b0ot0"]
 [ext_resource type="Script" path="res://scripts/PrismCollisionShape.gd" id="6_fiods"]
@@ -21,6 +24,15 @@ script = ExtResource("1_ixkpr")
 rotatable = NodePath("Smoothing/Rotatable")
 spring_arm = NodePath("Smoothing/Rotatable/SpringArm3D")
 camera = NodePath("Smoothing/Rotatable/SpringArm3D/Camera3D")
+
+[node name="Sound" type="Node" parent="."]
+script = ExtResource("4_l5qwg")
+
+[node name="Land" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("3_7a03k")
+
+[node name="Dash" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("3_a2jvh")
 
 [node name="Logic" type="Node" parent="."]
 script = ExtResource("2_qjcmw")
@@ -69,6 +81,8 @@ upper_radius = 0.2
 lower_radius = 0.2
 start = false
 
+[connection signal="dashed" from="Logic/Movement" to="Sound" method="_on_dash"]
+[connection signal="land" from="Logic/Movement" to="Sound" method="_on_land"]
 [connection signal="timeout" from="Logic/DashTimer" to="Logic" method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Logic/DashCooldownTimer" to="Logic" method="_on_dash_cooldown_timer_timeout"]
 [connection signal="timeout" from="Logic/CoyoteTimer" to="Logic" method="_on_coyote_timer_timeout"]

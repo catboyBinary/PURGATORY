@@ -1,7 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://btjlqsahg1e5s"]
+[gd_scene load_steps=17 format=3 uid="uid://bbjo2c4ecg7x2"]
 
-[ext_resource type="PackedScene" uid="uid://b1pth7b2pu6ki" path="res://objects/Player.tscn" id="1_rxttl"]
-[ext_resource type="Script" path="res://Label.gd" id="2_v14e6"]
+[ext_resource type="PackedScene" uid="uid://diwo3ru0y8t16" path="res://objects/Player.tscn" id="1_rxttl"]
+[ext_resource type="Script" path="res://scripts/Label.gd" id="2_hvgb5"]
 [ext_resource type="Script" path="res://scripts/UI.gd" id="3_0dafa"]
 [ext_resource type="Script" path="res://scripts/ProgressBar.gd" id="3_7gceg"]
 [ext_resource type="PackedScene" path="res://objects/CubeCyan.tscn" id="4_6krqk"]
@@ -66,12 +66,6 @@ sky_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "fps: "
-script = ExtResource("2_v14e6")
-
 [node name="UI" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 15
@@ -97,6 +91,13 @@ grow_horizontal = 2
 grow_vertical = 0
 show_percentage = false
 script = ExtResource("3_7gceg")
+
+[node name="FPS" type="Label" parent="CanvasLayer/UI"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 26.0
+text = "fps: "
+script = ExtResource("2_hvgb5")
 
 [node name="FallingCube" type="RigidBody3D" parent="."]
 transform = Transform3D(0.843234, -0.383608, 0.376566, 0.437943, 0.89647, -0.0674403, -0.311709, 0.221783, 0.923932, 0, 5.73853, -3.86405)

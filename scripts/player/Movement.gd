@@ -18,7 +18,12 @@ var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
 var on_floor_coyote: bool
 var coyote_time: float
 
+var landing : bool
+
 var dash_direction: Vector3
+
+signal land
+signal dashed
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector(
@@ -28,13 +33,19 @@ func _physics_process(delta: float) -> void:
 	var direction := (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if (player.is_on_floor()):
+		if landing:
+			land.emit()
+			landing = false
 		player_logic.coyote = true
 		player_logic.coyote_timer.stop()
 	else:
+		if !landing:
+			landing = true
 		player_logic.coyote_timer.start()
 	
 	match player_logic.state:
 		PlayerLogic.State.DASHING:
+			dashed.emit()
 			if (dash_direction == Vector3.ZERO):
 				dash_direction = direction
 			player.velocity = dash(dash_direction)

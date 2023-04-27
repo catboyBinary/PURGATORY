@@ -19,7 +19,6 @@ extends CharacterBody3D
 
 var third_person = false
 var crouching
-var running
 
 
 func _ready() -> void:
