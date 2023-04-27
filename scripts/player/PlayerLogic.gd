@@ -64,16 +64,25 @@ func general_state_machine(state: GeneralState) -> GeneralState:
 	
 func vertical_state_machine(state: VerticalState) -> VerticalState:
 	last_vertical_state = state
+	
+	if coyote:
+		return VerticalState.IDLE
+	
 	match state:
 		VerticalState.IDLE:
-			if player.velocity.y > 0.25: state = VerticalState.RISING
+			if player.velocity.y > 0.25: 
+				state = VerticalState.RISING
+			else: 
+				state = VerticalState.JUMP_APEX
 		VerticalState.RISING:
-			if -0.25 <= player.velocity.y and player.velocity.y <= 0.25: state = VerticalState.JUMP_APEX
+			if -0.25 <= player.velocity.y and player.velocity.y <= 0.25: 
+				state = VerticalState.JUMP_APEX
 		VerticalState.JUMP_APEX:
-			if player.velocity.y < -0.25: state = VerticalState.FALLING
+			if player.velocity.y < -0.25: 
+				state = VerticalState.FALLING
 			
-	if coyote: state = VerticalState.IDLE
-	if state != last_vertical_state: state = vertical_state_machine(state)
+	if state != last_vertical_state: 
+		state = vertical_state_machine(state)
 	general_state_changed.emit()
 	return state
 
@@ -92,19 +101,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 func update_coyote(is_on_floor: bool, has_jumped: bool):
 	if (has_jumped):
-		if not coyote_timer.is_stopped():
-			coyote_timer.stop()
+		coyote_timer.stop()
 		coyote = false
 		return
 	
 	if (is_on_floor):
-		if not coyote_timer.is_stopped():
-			coyote_timer.stop()
 		coyote = true
-		return
-	
-	if coyote_timer.is_stopped() and coyote:
 		coyote_timer.start()
+		return
 
 func _on_dash_timer_timeout() -> void:
 	ability_state = AbilityState.IDLE
