@@ -32,19 +32,20 @@ func _physics_process(delta: float) -> void:
 		&"move_left", &"move_right", 
 		&"move_forward", &"move_backward"
 	)
-	direction = (rotatable.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	var player_basis: Basis = rotatable.transform.basis
+	direction = (player_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
 	player_logic.update_coyote(player.is_on_floor(), false)
 	player_logic.vertical_state = player_logic.vertical_state_machine(player_logic.vertical_state)
+	
 	if (player.is_on_floor()):
 		if landing:
 			land.emit()
 			landing = false
-		player_logic.coyote = true
-		player_logic.coyote_timer.stop()
 	else:
 		if !landing:
 			landing = true
-		player_logic.coyote_timer.start()
 	
 	match player_logic.ability_state:
 		PlayerLogic.AbilityState.DASHING:
