@@ -67,10 +67,10 @@ func general_state_machine(state: GeneralState) -> GeneralState:
 func vertical_state_machine(state: VerticalState) -> VerticalState:
 	last_vertical_state = state
 	
-  if coyote: state = VerticalState.IDLE
 	if player.velocity.y > 0.25: state = VerticalState.RISING
 	elif -0.25 <= player.velocity.y and player.velocity.y <= 0.25: state = VerticalState.JUMP_APEX	
 	elif player.velocity.y < -0.25: state = VerticalState.FALLING
+	if coyote: state = VerticalState.IDLE
 	
 	if state != last_vertical_state: state = vertical_state_machine(state)
 	general_state_changed.emit()
