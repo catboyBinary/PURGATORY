@@ -51,14 +51,14 @@ func general_state_machine(state: GeneralState) -> GeneralState:
 	var speed_sq = flat_velocity.length_squared()
 	match state:
 		GeneralState.IDLE:
-			if speed_sq >= 0.01: state = GeneralState.RUNNING
+			if speed_sq >= 0.001: state = GeneralState.RUNNING
 			elif movement.crouching: state = GeneralState.IDLE_CROUCH
 		GeneralState.IDLE_CROUCH:
-			if speed_sq >= 0.01: state = GeneralState.CROUCHING
+			if speed_sq >= 0.001: state = GeneralState.CROUCHING
 		GeneralState.CROUCHING:
-			if speed_sq < 0.01: state = GeneralState.IDLE_CROUCH
+			if speed_sq < 0.001: state = GeneralState.IDLE_CROUCH
 		GeneralState.RUNNING:
-			if speed_sq < 0.01: state = GeneralState.IDLE
+			if speed_sq < 0.001: state = GeneralState.IDLE
 				
 	if state != last_general_state: state = general_state_machine(state)
 	general_state_changed.emit()
