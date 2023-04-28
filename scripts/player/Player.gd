@@ -38,6 +38,10 @@ func _unhandled_input(event) -> void:
 			Input.MOUSE_MODE_CAPTURED if not is_mouse_captured()
 			else Input.MOUSE_MODE_VISIBLE
 		)
+	
+	if event.is_action_pressed(&"shoot"):
+		$Gun.stop()
+		$Gun.play("shoot")
 
 	# Moves the camera according to the movement of the cursor.
 	elif is_mouse_captured() and (event is InputEventMouseMotion):
