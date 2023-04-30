@@ -1,84 +1,30 @@
 extends Node
 class_name PlayerLogic
 
-@onready var player = get_parent()
+@onready var player: CharacterBody3D = get_parent()
+@onready var movement_controller: MovementController = $MovementController
 
-enum AbilityState {
-	IDLE,
-	DASHING,
-	SWORD_DASH
-}
+# signal general_state_changed(state: GeneralState)
+# signal vertical_state_changed(state: VerticalState)
 
-enum GeneralState {
-	IDLE,
-	IDLE_CROUCH,
-	CROUCHING,
-	RUNNING,
-	SLIDING,
-	WALL_RUNNING
-}
-
-enum VerticalState {
-	IDLE,
-	RISING,
-	JUMP_APEX,
-	FALLING
-}
-
-signal general_state_changed(state: GeneralState)
-signal vertical_state_changed(state: VerticalState)
-
-var general_state  := GeneralState.IDLE
-var ability_state  := AbilityState.IDLE
-var vertical_state := VerticalState.IDLE
+var ability_state  := FSMStates.Ability.IDLE
+var general_state  := FSMStates.General.IDLE
+var vertical_state := FSMStates.Vertical.IDLE
 
 var can_dash: bool = true
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
-@onready var movement = $Movement
 
 var coyote: bool = false
 @onready var coyote_timer: Timer = $CoyoteTimer
 
 var buffered_jump: bool = false
-var last_general_state = general_state
-var last_vertical_state = general_state
 
-func general_state_machine(state: GeneralState) -> GeneralState:
-	last_general_state = state
-	var flat_velocity = player.velocity
-	flat_velocity.y = 0
-	var speed_sq = flat_velocity.length_squared()
-	match state:
-		GeneralState.IDLE:
-			if speed_sq >= 0.001: state = GeneralState.RUNNING
-			elif movement.crouching: state = GeneralState.IDLE_CROUCH
-		GeneralState.IDLE_CROUCH:
-			if speed_sq >= 0.001: state = GeneralState.CROUCHING
-		GeneralState.CROUCHING:
-			if speed_sq < 0.001: state = GeneralState.IDLE_CROUCH
-		GeneralState.RUNNING:
-			if speed_sq < 0.001: state = GeneralState.IDLE
-				
-	if state != last_general_state: state = general_state_machine(state)
-	general_state_changed.emit()
-	return state
-	
-func vertical_state_machine(state: VerticalState) -> VerticalState:
-	last_vertical_state = state
-	
-	if player.velocity.y > 0.25: state = VerticalState.RISING
-	elif -0.25 <= player.velocity.y and player.velocity.y <= 0.25: state = VerticalState.JUMP_APEX	
-	elif player.velocity.y < -0.25: state = VerticalState.FALLING
-	if coyote: state = VerticalState.IDLE
-	
-	if state != last_vertical_state: state = vertical_state_machine(state)
-	general_state_changed.emit()
-	return state
+signal update_ability_state(state: FSMStates.Ability)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and can_dash):
-		ability_state = AbilityState.DASHING
+		update_ability_state.emit(FSMStates.Ability.DASHING)
 		can_dash = false
 		dash_timer.start()
 		dash_cooldown_timer.start()
@@ -100,11 +46,17 @@ func update_coyote(is_on_floor: bool, has_jumped: bool):
 		coyote_timer.start()
 		return
 
-func _on_dash_timer_timeout() -> void:
-	ability_state = AbilityState.IDLE
-
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
 
 func _on_coyote_timer_timeout() -> void:
 	coyote = false
+
+func _on_ability_state_changed(state) -> void:
+	ability_state = state
+
+func _on_general_state_changed(state) -> void:
+	general_state = state
+
+func _on_vertical_state_changed(state) -> void:
+	vertical_state = state
