@@ -10,7 +10,7 @@ static func move(
 ) -> float:
 	if (!on_floor):
 		vertical_velocity -= gravity * delta
-		
+
 	return vertical_velocity
 
 static func jump(

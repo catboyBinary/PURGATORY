@@ -24,5 +24,4 @@ func run(
 				if speed_squared < 0.1: state = FSMStates.General.IDLE
 				
 		requires_checking = state != last_general_state
-	
-	general_state_changed.emit(state)
+		if (requires_checking): general_state_changed.emit(state)

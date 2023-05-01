@@ -18,18 +18,10 @@ var landing := false
 signal land
 signal dashed
 
-signal update_general_state(speed_squared: float, is_crouching: bool)
-signal update_vertical_state(vertical_velocity: float, force_idle: bool)
-
 func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, delta: float):
 	if (logic.ability_state == FSMStates.Ability.IDLE):
 		var last_vertical_state := logic.vertical_state
 		var vertical_velocity  := vertical_movement(player, delta)
-		
-		# Перенести отсюда куда-нибудь в логику
-		if (logic.vertical_state == FSMStates.Vertical.IDLE and
-			last_vertical_state != FSMStates.Vertical.IDLE):
-				land.emit()
 		
 		var flattened_velocity := player.velocity
 		flattened_velocity.y = 0
@@ -45,8 +37,8 @@ func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, 
 		player.velocity.y = vertical_velocity
 		dash_direction = direction
 		
-		update_general_state.emit(flattened_velocity.length_squared(), false)
-		update_vertical_state.emit(vertical_velocity, logic.coyote)
+		logic.general_fsm.run(flattened_velocity.length_squared(), false)
+		logic.vertical_fsm.run(vertical_velocity, logic.coyote)
 	else:
 		if (logic.ability_state == FSMStates.Ability.DASHING):
 			# это тоже перенести
@@ -74,5 +66,4 @@ func vertical_movement(player: CharacterBody3D, delta: float) -> float:
 		has_jumped = true
 	
 	logic.update_coyote(on_floor, has_jumped)
-	logic.vertical_state = FSMStates.Vertical.IDLE
 	return velocity

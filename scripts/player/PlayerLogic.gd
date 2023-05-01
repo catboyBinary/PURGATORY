@@ -11,6 +11,10 @@ var ability_state  := FSMStates.Ability.IDLE
 var general_state  := FSMStates.General.IDLE
 var vertical_state := FSMStates.Vertical.IDLE
 
+@onready var ability_fsm  = $StateMachines/AbilityFSM
+@onready var general_fsm  = $StateMachines/GeneralFSM
+@onready var vertical_fsm = $StateMachines/VerticalFSM
+
 var can_dash: bool = true
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
@@ -20,11 +24,9 @@ var coyote: bool = false
 
 var buffered_jump: bool = false
 
-signal update_ability_state(state: FSMStates.Ability)
-
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and can_dash):
-		update_ability_state.emit(FSMStates.Ability.DASHING)
+		ability_fsm.run(FSMStates.Ability.DASHING)
 		can_dash = false
 		dash_timer.start()
 		dash_cooldown_timer.start()
