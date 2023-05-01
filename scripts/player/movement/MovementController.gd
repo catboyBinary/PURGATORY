@@ -14,10 +14,6 @@ var raw_accel: float = 1
 var dash_direction: Vector3 = Vector3.ZERO
 var landing := false
 
-# я не ебу к чему бинари привязал эти сигналы, но звуков после рефакторинга нет
-signal land
-signal dashed
-
 func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, delta: float):
 	if (logic.ability_state == FSMStates.Ability.IDLE):
 		var last_vertical_state := logic.vertical_state
@@ -41,9 +37,6 @@ func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, 
 		logic.vertical_fsm.run(vertical_velocity, logic.coyote)
 	else:
 		if (logic.ability_state == FSMStates.Ability.DASHING):
-			# это тоже перенести
-			if (player.velocity != dash_direction * dash_speed):
-				dashed.emit()
 			if dash_direction == Vector3.ZERO: 
 				dash_direction = basis * Vector3.FORWARD
 			player.velocity = dash_direction * dash_speed

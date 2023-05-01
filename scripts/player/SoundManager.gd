@@ -16,7 +16,8 @@ func _on_ability_state_changed(state):
 func _on_general_state_changed(state):
 	match state:
 		FSMStates.General.RUNNING:
-			$Movement/Step.play()
+			if player.logic.vertical_state == FSMStates.Vertical.IDLE:
+				$Movement/Step.play()
 		_:
 			$Movement/Step.stop()
 
