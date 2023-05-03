@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://diwo3ru0y8t16"]
+[gd_scene load_steps=23 format=3 uid="uid://diwo3ru0y8t16"]
 
 [ext_resource type="Script" path="res://scripts/player/Player.gd" id="1_ixkpr"]
 [ext_resource type="Script" path="res://scripts/player/PlayerLogic.gd" id="2_qjcmw"]
@@ -14,6 +14,10 @@
 [ext_resource type="Script" path="res://scripts/PrismlikeCollisionShape.gd" id="9_0to01"]
 [ext_resource type="ArrayMesh" uid="uid://bsiqvytaemjig" path="res://assets/models/gun.obj" id="9_1wiru"]
 [ext_resource type="Script" path="res://scripts/player/CameraController.gd" id="12_h5qja"]
+
+[sub_resource type="Curve" id="Curve_vng6u"]
+_data = [Vector2(0, 0.518182), 0.0, 0.0, 0, 0, Vector2(0.216102, 1), 0.258934, 0.258934, 0, 0, Vector2(1, 0.509091), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exwgm"]
 albedo_texture = ExtResource("5_b0ot0")
@@ -132,6 +136,7 @@ crouching_collider = NodePath("../CollisionCrouching")
 stand_up_check = NodePath("../StandUpCheck")
 dash_time = 0.1
 dash_distance = 2.0
+dash_curve = SubResource("Curve_vng6u")
 
 [node name="StateMachines" type="Node" parent="Logic"]
 

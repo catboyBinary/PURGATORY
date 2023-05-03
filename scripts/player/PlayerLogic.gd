@@ -38,11 +38,21 @@ var can_stand_up: bool = true
 @export var dash_distance: float:
 	set(value):
 		dash_speed = value / dash_time
+@export var dash_curve: Curve
+
 
 var dash_speed: float
+var dash_curve_average: float
+
 
 func _ready() -> void:
 	dash_timer.wait_time = dash_time
+	
+	# Находим среднее значение кривой и компенсируем скорость дэша
+	for i in range(100):
+		dash_curve_average += dash_curve.sample_baked(float(i) / 100.0)
+	dash_curve_average /= 100.0
+	dash_speed /= dash_curve_average
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and can_dash and can_stand_up):

@@ -60,9 +60,17 @@ func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, 
 		logic.vertical_fsm.run(vertical_velocity, logic.coyote)
 	else:
 		if (logic.ability_state == FSMStates.Ability.DASHING):
+			var curve_offset := remap(
+				logic.dash_timer.time_left,
+				0,
+				logic.dash_timer.wait_time,
+				0,
+				1
+			)
 			if dash_direction == Vector3.ZERO: 
 				dash_direction = basis * Vector3.FORWARD
 			player.velocity = dash_direction * logic.dash_speed
+			player.velocity *= logic.dash_curve.sample_baked(curve_offset)
 
 func stuck_check():
 	if (logic.is_crouching):
