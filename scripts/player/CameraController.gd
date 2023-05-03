@@ -30,7 +30,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if (position != target_position):
-		position = position.lerp(target_position, 0.01)
+		position = position.lerp(target_position, delta*10)
 	else:
 		set_process(false)
 
