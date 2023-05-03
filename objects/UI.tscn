@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cp4clk53ss4n7"]
+[gd_scene load_steps=3 format=3 uid="uid://cp4clk53ss4n7"]
 
 [ext_resource type="Script" path="res://scripts/UI.gd" id="1_dbbul"]
+[ext_resource type="Script" path="res://scripts/ui/MovementPanel.gd" id="2_c6pya"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -56,3 +57,47 @@ offset_right = 108.0
 offset_bottom = 96.0
 text = "vertical_state:
 "
+
+[node name="MovementStuff" type="Panel" parent="." node_paths=PackedStringArray("ui")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -229.0
+offset_right = 211.0
+grow_vertical = 0
+script = ExtResource("2_c6pya")
+ui = NodePath("..")
+
+[node name="Speed" type="Label" parent="MovementStuff"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Current speed: "
+
+[node name="Acceleration" type="Label" parent="MovementStuff"]
+layout_mode = 0
+offset_top = 19.0
+offset_right = 168.0
+offset_bottom = 45.0
+text = "Current acceleration: "
+
+[node name="Orientation" type="Label" parent="MovementStuff"]
+layout_mode = 0
+offset_top = 39.0
+offset_right = 168.0
+offset_bottom = 65.0
+text = "Orientation:"
+
+[node name="VelocityArrow" type="Line2D" parent="MovementStuff"]
+position = Vector2(108, 134)
+points = PackedVector2Array(0, 0, -2, -49)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="AccelArrow" type="Line2D" parent="MovementStuff"]
+position = Vector2(108, 134)
+points = PackedVector2Array(0, 0, 0, 0)
+default_color = Color(1, 0.364706, 1, 1)
+begin_cap_mode = 2
+end_cap_mode = 2

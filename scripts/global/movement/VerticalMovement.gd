@@ -1,11 +1,10 @@
 extends Node
 class_name VerticalMovement
 
-const gravity: float = 15
-
 static func move(
 	vertical_velocity: float, 
 	on_floor: bool,
+	gravity: float,
 	delta: float
 ) -> float:
 	if (!on_floor):

@@ -31,8 +31,18 @@ var can_stand_up: bool = true
 @export_group("Colliders, my beloved")
 @export var standing_collider:  CollisionShape3D
 @export var crouching_collider: CollisionShape3D
-
 @export var stand_up_check: Area3D
+
+@export_group("Abilities")
+@export var dash_time: float
+@export var dash_distance: float:
+	set(value):
+		dash_speed = value / dash_time
+
+var dash_speed: float
+
+func _ready() -> void:
+	dash_timer.wait_time = dash_time
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and can_dash and can_stand_up):
