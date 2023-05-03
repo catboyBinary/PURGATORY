@@ -130,6 +130,8 @@ script = ExtResource("2_qjcmw")
 standing_collider = NodePath("../CollisionStanding")
 crouching_collider = NodePath("../CollisionCrouching")
 stand_up_check = NodePath("../StandUpCheck")
+dash_time = 0.1
+dash_distance = 2.0
 
 [node name="StateMachines" type="Node" parent="Logic"]
 
@@ -144,6 +146,11 @@ script = ExtResource("5_c24a8")
 
 [node name="MovementController" type="Node" parent="Logic"]
 script = ExtResource("4_c0sit")
+max_speed = 7
+time_to_full_stop = 0.5
+time_to_full_speed = 0.2
+jump_duration = 0.8
+jump_height = 2.1
 
 [node name="DashTimer" type="Timer" parent="Logic" groups=["PlayerTimers"]]
 wait_time = 0.07

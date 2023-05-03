@@ -3,13 +3,34 @@ class_name MovementController
 
 @onready var logic: PlayerLogic = get_parent()
 
-@export var max_speed := 5
-@export var jump_velocity := 7.0
-@export var coyote := 0.1
-@export var dash_speed := 40
+var raw_decel: float
+var raw_accel: float
 
-var raw_decel: float = 0.2
-var raw_accel: float = 1
+@export var max_speed := 5
+@export var time_to_full_stop: float:
+	set(value):
+		raw_decel = max_speed / value / float(Engine.physics_ticks_per_second)
+@export var time_to_full_speed: float:
+	set(value):
+		raw_accel = max_speed / value / float(Engine.physics_ticks_per_second)
+		# компенсируем факт того что замедление у нас применяется всегда
+		raw_accel += raw_decel
+@export_range(0, 1) var speed_cap_strength: float = 0.9
+
+# jump-height = 1/2 * jump-velocity^2 / gravity
+@export var jump_duration: float:
+	set(value):
+		jump_duration = value
+		gravity = 8 * (jump_height / pow(jump_duration, 2))
+		jump_velocity = gravity * 0.5 * jump_duration
+@export var jump_height: float:
+	set(value):
+		jump_height = value
+		gravity = 8 * (jump_height / pow(jump_duration, 2))
+		jump_velocity = gravity * 0.5 * jump_duration
+	
+var gravity: float
+var jump_velocity: float
 
 var dash_direction: Vector3 = Vector3.ZERO
 
@@ -29,6 +50,7 @@ func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, 
 			raw_decel,
 			raw_accel,
 			max_speed,
+			speed_cap_strength,
 			delta
 		)
 		player.velocity.y = vertical_velocity
@@ -40,7 +62,7 @@ func update_velocity(player: CharacterBody3D, basis: Basis, direction: Vector3, 
 		if (logic.ability_state == FSMStates.Ability.DASHING):
 			if dash_direction == Vector3.ZERO: 
 				dash_direction = basis * Vector3.FORWARD
-			player.velocity = dash_direction * dash_speed
+			player.velocity = dash_direction * logic.dash_speed
 
 func stuck_check():
 	if (logic.is_crouching):
@@ -58,9 +80,12 @@ func vertical_movement(player: CharacterBody3D, delta: float) -> float:
 	var on_floor   := player.is_on_floor()
 	var has_jumped := false
 	
+	print(gravity)
+	
 	var velocity := VerticalMovement.move(
 		player.velocity.y,
 		on_floor,
+		gravity,
 		delta
 	)
 	
