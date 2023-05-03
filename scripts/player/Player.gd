@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @onready var dash_cooldown = find_child("DashCooldownTimer")
-@onready var logic = $Logic
+@onready var logic: PlayerLogic = $Logic
 
 @export_group("Camera")
 @export var rotatable : Node3D
@@ -20,14 +20,28 @@ extends CharacterBody3D
 
 var third_person = false
 
-
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	camera_setup()
+	camera.current = true
 
 func _physics_process(delta):
-	logic.general_state = logic.general_state_machine(logic.general_state)
-
+	var input_dir := Input.get_vector(
+		&"move_left", &"move_right", 
+		&"move_forward", &"move_backward"
+	)
+	
+	var player_basis: Basis = rotatable.transform.basis
+	var direction := (player_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	logic.movement_controller.update_velocity(
+		self,
+		rotatable.transform.basis,
+		direction,
+		delta
+	)
+	move_and_slide()
+	
+	
 func _unhandled_input(event) -> void:
 	if event.is_action_pressed(&"third_person"):
 		third_person = !third_person
@@ -56,9 +70,3 @@ func _unhandled_input(event) -> void:
 
 func is_mouse_captured() -> bool:
 	return Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-
-func camera_setup() -> void:
-	camera.current = true
-	camera.fov = fov
-	spring_arm.position = Vector3(0, 1.5, 0)
-	spring_arm.spring_length = 0

@@ -1,9 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bbjo2c4ecg7x2"]
+[gd_scene load_steps=16 format=3 uid="uid://bbjo2c4ecg7x2"]
 
 [ext_resource type="PackedScene" uid="uid://diwo3ru0y8t16" path="res://objects/Player.tscn" id="1_rxttl"]
 [ext_resource type="PackedScene" uid="uid://cp4clk53ss4n7" path="res://objects/UI.tscn" id="2_cn7xk"]
-[ext_resource type="PackedScene" path="res://objects/CubeCyan.tscn" id="4_6krqk"]
-[ext_resource type="PackedScene" path="res://objects/CubeFuchsia.tscn" id="5_o8c26"]
+[ext_resource type="PackedScene" uid="uid://bl0y56qill6c1" path="res://objects/CubeCyan.tscn" id="4_6krqk"]
+[ext_resource type="PackedScene" uid="uid://d1146gk3mce5c" path="res://objects/CubeFuchsia.tscn" id="5_o8c26"]
 [ext_resource type="Texture2D" uid="uid://bq128r31mhsnh" path="res://assets/textures/testscene/tile.png" id="6_bbxef"]
 [ext_resource type="PackedScene" uid="uid://ddl7ge1vp1vib" path="res://objects/Angel.tscn" id="7_ug0k4"]
 
@@ -35,6 +35,9 @@ volumetric_fog_albedo = Color(0.776471, 0.717647, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_enj52"]
 
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2ocv3"]
+points = PackedVector3Array(0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_shre6"]
 albedo_texture = ExtResource("6_bbxef")
 uv1_scale = Vector3(10, 10, 10)
@@ -44,8 +47,8 @@ texture_filter = 0
 [sub_resource type="PlaneMesh" id="PlaneMesh_dmcav"]
 material = SubResource("ORMMaterial3D_shre6")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_tcrl1"]
-data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_nxuub"]
+points = PackedVector3Array(-1, 0, 1, 1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="TestScene" type="Node3D"]
 
@@ -92,7 +95,10 @@ transform = Transform3D(1.14582, -1.01802, -3.50663, 0.206457, 1.64471, -3.05425
 [node name="Cube2" parent="Cubes" instance=ExtResource("5_o8c26")]
 
 [node name="Cube3" parent="Cubes" instance=ExtResource("5_o8c26")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.78973, 2.18738, -3.7829)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4.78973, 2.31424, -3.7829)
+
+[node name="CollisionShape3D" parent="Cubes/Cube3" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
 
 [node name="Cube6" parent="Cubes" instance=ExtResource("5_o8c26")]
 transform = Transform3D(4.01125, 0, 0, 0, 4.01125, 0, 0, 0, 4.01125, 18.1282, 7.55544, -2.55344)
@@ -105,17 +111,310 @@ light_energy = 1.681
 light_size = 1.0
 omni_range = 10.0
 
+[node name="CrawlyPart" type="Node3D" parent="Cubes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -11.6086)
+
+[node name="Cube7" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube7" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube7" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube8" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube8" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube8" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube13" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube13" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube13" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube9" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube9" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube9" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube10" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube10" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube10" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube12" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube12" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube12" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube11" parent="Cubes/CrawlyPart" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart/Cube11" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart/Cube11" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="CrawlyPart2" type="Node3D" parent="Cubes"]
+transform = Transform3D(0.998593, 0, 0.0530331, 0, 1, 0, -0.0530331, 0, 0.998593, 0, 0, -14.0232)
+
+[node name="Cube7" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube7" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube7" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube8" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube8" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube8" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube13" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube13" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube13" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube9" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube9" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube9" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube10" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube10" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube10" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube12" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube12" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube12" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube11" parent="Cubes/CrawlyPart2" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart2/Cube11" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart2/Cube11" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="CrawlyPart3" type="Node3D" parent="Cubes"]
+transform = Transform3D(0.985774, 0, 0.168076, 0, 1, 0, -0.168076, 0, 0.985774, -0.262207, 0, -16.4274)
+
+[node name="Cube7" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube7" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube7" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube8" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube8" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube8" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube13" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube13" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube13" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube9" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube9" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube9" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube10" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube10" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube10" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube12" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube12" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube12" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube11" parent="Cubes/CrawlyPart3" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart3/Cube11" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart3/Cube11" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="CrawlyPart4" type="Node3D" parent="Cubes"]
+transform = Transform3D(0.975473, 0, 0.220119, 0, 1, 0, -0.220119, 0, 0.975473, -0.668044, 0, -18.8076)
+
+[node name="Cube7" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2.3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube7" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube7" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube8" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube8" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube8" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube13" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube13" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube13" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube9" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube9" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube9" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube10" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube10" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube10" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube12" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -4, 1, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube12" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube12" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
+[node name="Cube11" parent="Cubes/CrawlyPart4" instance=ExtResource("5_o8c26")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -2, 3, 0)
+
+[node name="mesh" parent="Cubes/CrawlyPart4/Cube11" index="0"]
+skeleton = NodePath("../../..")
+
+[node name="CollisionShape3D" parent="Cubes/CrawlyPart4/Cube11" index="1"]
+shape = SubResource("ConvexPolygonShape3D_2ocv3")
+
 [node name="Plane" type="StaticBody3D" parent="."]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
 
 [node name="Plane" type="MeshInstance3D" parent="Plane"]
 mesh = SubResource("PlaneMesh_dmcav")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Plane"]
-shape = SubResource("ConcavePolygonShape3D_tcrl1")
+shape = SubResource("ConvexPolygonShape3D_nxuub")
 
 [node name="Angel" parent="." instance=ExtResource("7_ug0k4")]
 transform = Transform3D(-0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866025, -0.286552, 2.39264, -12.8215)
 
+[editable path="Cubes/Cube3"]
 [editable path="Cubes/Cube6"]
+[editable path="Cubes/CrawlyPart/Cube7"]
+[editable path="Cubes/CrawlyPart/Cube8"]
+[editable path="Cubes/CrawlyPart/Cube13"]
+[editable path="Cubes/CrawlyPart/Cube9"]
+[editable path="Cubes/CrawlyPart/Cube10"]
+[editable path="Cubes/CrawlyPart/Cube12"]
+[editable path="Cubes/CrawlyPart/Cube11"]
+[editable path="Cubes/CrawlyPart2/Cube7"]
+[editable path="Cubes/CrawlyPart2/Cube8"]
+[editable path="Cubes/CrawlyPart2/Cube13"]
+[editable path="Cubes/CrawlyPart2/Cube9"]
+[editable path="Cubes/CrawlyPart2/Cube10"]
+[editable path="Cubes/CrawlyPart2/Cube12"]
+[editable path="Cubes/CrawlyPart2/Cube11"]
+[editable path="Cubes/CrawlyPart3/Cube7"]
+[editable path="Cubes/CrawlyPart3/Cube8"]
+[editable path="Cubes/CrawlyPart3/Cube13"]
+[editable path="Cubes/CrawlyPart3/Cube9"]
+[editable path="Cubes/CrawlyPart3/Cube10"]
+[editable path="Cubes/CrawlyPart3/Cube12"]
+[editable path="Cubes/CrawlyPart3/Cube11"]
+[editable path="Cubes/CrawlyPart4/Cube7"]
+[editable path="Cubes/CrawlyPart4/Cube8"]
+[editable path="Cubes/CrawlyPart4/Cube13"]
+[editable path="Cubes/CrawlyPart4/Cube9"]
+[editable path="Cubes/CrawlyPart4/Cube10"]
+[editable path="Cubes/CrawlyPart4/Cube12"]
+[editable path="Cubes/CrawlyPart4/Cube11"]

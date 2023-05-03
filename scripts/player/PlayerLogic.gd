@@ -1,93 +1,55 @@
 extends Node
 class_name PlayerLogic
 
-@onready var player = get_parent()
+@onready var player: CharacterBody3D = get_parent()
+@onready var movement_controller: MovementController = $MovementController
 
-enum AbilityState {
-	IDLE,
-	DASHING,
-	SWORD_DASH
-}
+# signal general_state_changed(state: GeneralState)
+# signal vertical_state_changed(state: VerticalState)
 
-enum GeneralState {
-	IDLE,
-	IDLE_CROUCH,
-	CROUCHING,
-	RUNNING,
-	SLIDING,
-	WALL_RUNNING
-}
+var ability_state  := FSMStates.Ability.IDLE
+var general_state  := FSMStates.General.IDLE
+var vertical_state := FSMStates.Vertical.IDLE
 
-enum VerticalState {
-	IDLE,
-	RISING,
-	JUMP_APEX,
-	FALLING
-}
-
-signal general_state_changed(state: GeneralState)
-signal vertical_state_changed(state: VerticalState)
-
-var general_state  := GeneralState.IDLE
-var ability_state  := AbilityState.IDLE
-var vertical_state := VerticalState.IDLE
+@onready var ability_fsm  = $StateMachines/AbilityFSM
+@onready var general_fsm  = $StateMachines/GeneralFSM
+@onready var vertical_fsm = $StateMachines/VerticalFSM
 
 var can_dash: bool = true
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
-@onready var movement = $Movement
 
 var coyote: bool = false
 @onready var coyote_timer: Timer = $CoyoteTimer
 
 var buffered_jump: bool = false
-var last_general_state = general_state
-var last_vertical_state = general_state
 
-func general_state_machine(state: GeneralState) -> GeneralState:
-	last_general_state = state
-	var flat_velocity = player.velocity
-	flat_velocity.y = 0
-	var speed_sq = flat_velocity.length_squared()
-	match state:
-		GeneralState.IDLE:
-			if speed_sq >= 0.001: state = GeneralState.RUNNING
-			elif movement.crouching: state = GeneralState.IDLE_CROUCH
-		GeneralState.IDLE_CROUCH:
-			if speed_sq >= 0.001: state = GeneralState.CROUCHING
-		GeneralState.CROUCHING:
-			if speed_sq < 0.001: state = GeneralState.IDLE_CROUCH
-		GeneralState.RUNNING:
-			if speed_sq < 0.001: state = GeneralState.IDLE
-				
-	if state != last_general_state: state = general_state_machine(state)
-	general_state_changed.emit()
-	return state
-	
-func vertical_state_machine(state: VerticalState) -> VerticalState:
-	last_vertical_state = state
-	
-	if player.velocity.y > 0.25: state = VerticalState.RISING
-	elif -0.25 <= player.velocity.y and player.velocity.y <= 0.25: state = VerticalState.JUMP_APEX	
-	elif player.velocity.y < -0.25: state = VerticalState.FALLING
-	if coyote: state = VerticalState.IDLE
-	
-	if state != last_vertical_state: state = vertical_state_machine(state)
-	general_state_changed.emit()
-	return state
+var holds_crouch_button: bool = false
+var is_crouching: bool = false
+var can_stand_up: bool = true
+
+@export_group("Colliders, my beloved")
+@export var standing_collider:  CollisionShape3D
+@export var crouching_collider: CollisionShape3D
+
+@export var stand_up_check: Area3D
 
 func _unhandled_input(event: InputEvent) -> void:
-	if (event.is_action_pressed("dash") and can_dash):
-		ability_state = AbilityState.DASHING
+	if (event.is_action_pressed("dash") and can_dash and can_stand_up):
+		ability_fsm.run(FSMStates.Ability.DASHING)
 		can_dash = false
 		dash_timer.start()
 		dash_cooldown_timer.start()
 		
 	if (event.is_action_pressed("jump")):
 		buffered_jump = true
-	
 	if (event.is_action_released("jump")):
 		buffered_jump = false
+		
+	if (event.is_action_pressed("crouch")):
+		holds_crouch_button = true
+	if (event.is_action_released("crouch")):
+		holds_crouch_button = false
 		
 func update_coyote(is_on_floor: bool, has_jumped: bool):
 	if (has_jumped):
@@ -100,11 +62,25 @@ func update_coyote(is_on_floor: bool, has_jumped: bool):
 		coyote_timer.start()
 		return
 
-func _on_dash_timer_timeout() -> void:
-	ability_state = AbilityState.IDLE
-
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
 
 func _on_coyote_timer_timeout() -> void:
 	coyote = false
+
+func _on_ability_state_changed(state) -> void:
+	ability_state = state
+
+func _on_general_state_changed(state) -> void:
+	general_state = state
+	
+	match (state):
+		FSMStates.General.CROUCHING, FSMStates.General.IDLE_CROUCH:
+			standing_collider.disabled = true
+			crouching_collider.disabled = false
+		_:
+			standing_collider.disabled = false
+			crouching_collider.disabled = true
+
+func _on_vertical_state_changed(state) -> void:
+	vertical_state = state
