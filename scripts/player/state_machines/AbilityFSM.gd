@@ -17,6 +17,5 @@ func run(
 			state = new_state
 	ability_state_changed.emit(state)
 
-
 func _on_dash_timer_timeout() -> void:
 	run(queued_state)
