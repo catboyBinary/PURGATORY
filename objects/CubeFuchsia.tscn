@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://d1146gk3mce5c"]
 
 [ext_resource type="Texture2D" uid="uid://4b36g1ijiaeq" path="res://assets/textures/testscene/tileEmissive.png" id="1_224he"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3wrv7"]
-load_path = "res://.godot/imported/tile.png-6f6353122b9536779e4cee6ca5f67c42.ctex"
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_a46sp"]
 albedo_texture = SubResource("CompressedTexture2D_3wrv7")

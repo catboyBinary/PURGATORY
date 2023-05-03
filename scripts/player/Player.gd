@@ -22,7 +22,7 @@ var third_person = false
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	camera_setup()
+	camera.current = true
 
 func _physics_process(delta):
 	var input_dir := Input.get_vector(
@@ -70,9 +70,3 @@ func _unhandled_input(event) -> void:
 
 func is_mouse_captured() -> bool:
 	return Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-
-func camera_setup() -> void:
-	camera.current = true
-	camera.fov = fov
-	spring_arm.position = Vector3(0, 1.5, 0)
-	spring_arm.spring_length = 0

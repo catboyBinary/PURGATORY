@@ -24,8 +24,18 @@ var coyote: bool = false
 
 var buffered_jump: bool = false
 
+var holds_crouch_button: bool = false
+var is_crouching: bool = false
+var can_stand_up: bool = true
+
+@export_group("Colliders, my beloved")
+@export var standing_collider:  CollisionShape3D
+@export var crouching_collider: CollisionShape3D
+
+@export var stand_up_check: Area3D
+
 func _unhandled_input(event: InputEvent) -> void:
-	if (event.is_action_pressed("dash") and can_dash):
+	if (event.is_action_pressed("dash") and can_dash and can_stand_up):
 		ability_fsm.run(FSMStates.Ability.DASHING)
 		can_dash = false
 		dash_timer.start()
@@ -33,9 +43,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if (event.is_action_pressed("jump")):
 		buffered_jump = true
-	
 	if (event.is_action_released("jump")):
 		buffered_jump = false
+		
+	if (event.is_action_pressed("crouch")):
+		holds_crouch_button = true
+	if (event.is_action_released("crouch")):
+		holds_crouch_button = false
 		
 func update_coyote(is_on_floor: bool, has_jumped: bool):
 	if (has_jumped):
@@ -59,6 +73,14 @@ func _on_ability_state_changed(state) -> void:
 
 func _on_general_state_changed(state) -> void:
 	general_state = state
+	
+	match (state):
+		FSMStates.General.CROUCHING, FSMStates.General.IDLE_CROUCH:
+			standing_collider.disabled = true
+			crouching_collider.disabled = false
+		_:
+			standing_collider.disabled = false
+			crouching_collider.disabled = true
 
 func _on_vertical_state_changed(state) -> void:
 	vertical_state = state

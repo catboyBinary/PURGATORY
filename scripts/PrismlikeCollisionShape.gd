@@ -3,7 +3,10 @@ extends ConvexPolygonShape3D
 class_name PrismlikeColliderShape
 
 @export_group("Collider")
-@export var height : float
+@export var height : float:
+	set(value):
+		height = value
+		update_points()
 
 @export_range(0.1, 20, 0.1) var radius: float:
 	set(value):
